@@ -57,8 +57,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // /* COL2ROW, ROW2COL*/
 // #define DIODE_DIRECTION COL2ROW
 
-// #define ENCODERS_PAD_A {C6, E6}
-// #define ENCODERS_PAD_B {D7, B4}
+#define ENCODERS_PAD_A {C6, E6}
+#define ENCODERS_PAD_B {D7, B4}
 
 
 // #ifdef FP_EVQ
@@ -66,6 +66,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define ENCODERS_B_REVERSE
 // #endif
 
-// #ifdef FP_EC11
-// #define ENCODERS_C_REVERSE
-// #endif
+#ifdef FP_EC11
+#define ENCODERS_C_REVERSE
+#endif

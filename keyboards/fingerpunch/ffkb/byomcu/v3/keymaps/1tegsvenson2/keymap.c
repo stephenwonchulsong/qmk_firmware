@@ -24,8 +24,11 @@ enum custom_keycodes {
     PHONE_1,
     TEMP1,
     TEMP2,
-    TEMP3
+    TEMP3,
+    DRAG_SCROLL
 };
+
+bool is_drag_scroll = false;
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
@@ -79,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  RSFT_T(KC_SLSH), SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                KC_LALT, LOWERDEL, KC_LGUI,  KC_BTN1,   KC_BTN2, KC_SPC, RAISE,  KC_CAPS
+                                DRAG_SCROLL, LOWERDEL, KC_LGUI,  KC_BTN1,   KC_BTN2, KC_SPC, RAISE,  KC_CAPS
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 // Default config uses home row mods. So hold each of the keys on the home row to use ctrl, gui, alt, or shift
@@ -92,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), KC_V, LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  RSFT_T(KC_SLSH), SHIFTL,
   ////|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                KC_LALT, KC_LALT, LOWER,  KC_LGUI,      KC_SPC, RAISE,  KC_CAPS, KC_LCTL
+                                DRAG_SCROLL, KC_LALT, LOWER,  KC_LGUI,      KC_SPC, RAISE,  KC_CAPS, KC_LCTL
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -117,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      SFTSLSH,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                KC_LALT, LT(_LOWER, KC_DEL), KC_LGUI,  KC_BTN1,   KC_BTN2, KC_SPC, RAISECAPS,  KC_CAPS
+                                DRAG_SCROLL, LT(_LOWER, KC_DEL), KC_LGUI,  KC_BTN1,   KC_BTN2, KC_SPC, RAISECAPS,  KC_CAPS
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|
 ),
 
@@ -129,7 +132,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      SFTSLSH,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                KC_LALT,  LOWER, KC_LGUI, KC_SPC,      KC_SPC, RAISE,  KC_CAPS, KC_LCTL
+                                DRAG_SCROLL,  LOWER, KC_LGUI, KC_SPC,      KC_SPC, RAISE,  KC_CAPS, KC_LCTL
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -238,7 +241,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     RSFT(KC_DQT), RSFT(KC_Z), RSFT(KC_X), RSFT(KC_C), RSFT(KC_V), RSFT(KC_B), RSFT(KC_N), RSFT(KC_M), RSFT(KC_LPRN), RSFT(KC_RPRN), RSFT(KC_SLSH), SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                            RSFT(KC_LALT), _______, _______,  RSFT(KC_BTN1),   RSFT(KC_BTN2), RSFT(KC_SPC), _______, _______
+                            _______, _______, _______,  RSFT(KC_BTN1),   RSFT(KC_BTN2), RSFT(KC_SPC), _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -266,11 +269,11 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [_NMIRYOKU] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
     [_COLEMAK] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
     [_CRKBD2] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
-    [_LOWER] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),              ENCODER_CCW_CW(KC_LEFT, KC_RIGHT) },
-    [_RAISE] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),              ENCODER_CCW_CW(KC_LEFT, KC_RIGHT) },
-    [_ADJUST] = { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),            ENCODER_CCW_CW(KC_LEFT, KC_RIGHT) },
-    [_SHIFT] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-    [_EXTRA] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),            ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+    [_LOWER] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),              ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_RAISE] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),              ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_ADJUST] = { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),            ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_SHIFT] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  },
+    [_EXTRA] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),            ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  },
     // [_MOUSE] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
 };
 #endif
@@ -343,6 +346,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
             return false;
         }
         break;
+    // case DRAG_SCROLL: //scrolling with trackball
+    //         is_drag_scroll ^= 1;
+    //         if (record->event.pressed)
+    //             fp_set_cpi(100);
+    //         else
+    //             fp_set_cpi(spi_read[keymap_config.dpi_config]);
+    //         break;
     // case TEMP2: //Assignment#1, VIC3001
     //     if (record -> event.pressed)
     //     {
@@ -369,42 +379,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     }
     return true;
 }
-
-// #ifdef ENCODER_ENABLE
-// bool encoder_update_user(uint8_t index, bool clockwise) {
-//     // default behavior if undefined
-//     if (index == 0) {
-//         // Conditional to reverse the direction of encoder number 1
-//         // The reason I have this is that for some of my boards, it supports two different types of encoders, and they may differ in direction
-//         #ifdef ENCODERS_A_REVERSE
-//         if (!clockwise) {
-//         #else
-//         if (clockwise) {
-//         #endif
-//             tap_code(KC_VOLU);
-//         } else {
-//             tap_code(KC_VOLD);
-//         }
-//     }
-//     else if (index == 1) {
-//       // Conditional to reverse the direction of encoder number 1
-//       // The reason I have this is that for some of my boards, it supports two different types of encoders, and they may differ in direction
-//       #ifdef ENCODERS_B_REVERSE
-//       if (!clockwise) {
-//       #else
-//       if (clockwise) {
-//       #endif
-//         press_super_tab(true);
-//       }
-//       else{
-//         press_super_tab(false);
-//       }
-//     }
-
-//     return true;
-// }
-// #endif
-
 
 //   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
 //      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
@@ -447,5 +421,34 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         default:
             // Do not select the hold action when another key is tapped.
             return false;
+    }
+}
+
+
+// The real magic is here.
+// This function is called to translate the processed sensor movement
+// from the mouse sensor and translates it into x and y movement for
+// the mouse report. Normally.  So if "drag scroll" is toggled on,
+// moving the ball scrolls instead.  You could remove the  x or y here
+//  to only scroll in one direction, if you wanted, as well. In fact,
+// there is no reason that you need to send this to the mouse report.
+// You could have it register a key, instead.
+void process_mouse_user(report_mouse_t* mouse_report, int16_t x, int16_t y) {
+    if (is_drag_scroll) {
+        mouse_report->h = -x;
+        mouse_report->v = y;
+    } else {
+        mouse_report->x = x;
+        mouse_report->y = y;
+    }
+}
+
+void process_wheel_user(report_mouse_t* mouse_report, int16_t h, int16_t v) {
+    if (is_drag_scroll) {
+        mouse_report->h = -v;
+        mouse_report->v = h;
+    } else {
+        mouse_report->h = h;
+        mouse_report->v = v;
     }
 }
