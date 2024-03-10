@@ -44,7 +44,7 @@ enum charybdis_keymap_layers {
 #define ADJST_ESC LT(LAYER_ADJST, KC_ESC)
 #define RAISE_TAB LT(LAYER_RAISE, KC_TAB)
 #define ADJST_TAB LT(LAYER_ADJST, KC_TAB)
-#define EXTRA_ENT LT(LAYER_EXTRA, KC_ENT)
+#define EXTRA_SLSH LT(LAYER_EXTRA, KC_SLSH)
 #define MOUSE_FFF LT(LAYER_MOUSE, KC_F)
 
 enum custom_keycodes {
@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
           KC_A,    KC_S,    KC_D,  MOUSE_FFF, KC_G,       KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-      LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
+      LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_CMLP, KC_DTRP, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
                          KC_BSPC, LOWER_ESC, RGUI_T(KC_ENT), KC_SPC, RAISE_TAB
   //                   ╰───────────────────────────╯ ╰──────────────────╯
@@ -134,11 +134,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_MOUSE] = LAYOUT(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-          KC_QTAB,    KC_W,    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+          KC_QTAB, LGUI(KC_W),    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          KC_A,    KC_WH_U,    KC_D,  MOUSE_FFF, KC_G,       KC_H,    KC_CAPS,    KC_K,    KC_L, KC_SCLN,
+          LGUI(KC_A),    KC_S,    KC_D,  MOUSE_FFF, KC_G,       KC_H,    KC_CAPS,    KC_K,    KC_L, KC_SCLN,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-      KC_WH_L, KC_WH_D, KC_WH_R, LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
+      LGUI(KC_Z), LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
                          KC_BTN2, KC_BTN1, KC_BTN1, KC_SPC, RAISE_TAB
   //                   ╰───────────────────────────╯ ╰──────────────────╯
