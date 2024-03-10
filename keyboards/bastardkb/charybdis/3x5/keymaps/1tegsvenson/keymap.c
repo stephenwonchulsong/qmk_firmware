@@ -136,11 +136,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
           KC_QTAB, LGUI(KC_W),    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          LGUI(KC_A),    KC_S,    KC_D,  MOUSE_FFF, KC_G,       KC_H,    KC_CAPS,    KC_K,    KC_L, KC_SCLN,
+          LGUI(KC_A),    KC_F3,    KC_D,  MOUSE_FFF, KC_G,       KC_H,    KC_CAPS,    KC_K,    KC_L, KC_SCLN,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
       LGUI(KC_Z), LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         KC_BTN2, KC_BTN1, KC_BTN1, KC_SPC, RAISE_TAB
+                         KC_BTN2, KC_BTN1, LGUI(KC_BTN1), KC_SPC, RAISE_TAB
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -159,7 +159,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_DTRP:
       if (record->event.pressed){
         if (get_mods() & MOD_BIT(KC_RSFT)){
-          register_code(KC_9);
+          register_code(KC_0);
         } else {
           register_code(KC_DOT);
         }
