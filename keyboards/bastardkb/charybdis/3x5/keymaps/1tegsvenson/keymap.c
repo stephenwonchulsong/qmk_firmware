@@ -87,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
           KC_QTAB, LSFT(LCTL(KC_TAB)),    KC_E,    LCTL(KC_TAB),    LGUI(LSFT(KC_5)),       KC_7,    KC_8,    KC_9,    KC_PLUS,    KC_EQL,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          KC_VOLU,    LGUI(KC_LEFT),    KC_D,  LGUI(KC_RIGHT), W1R,       KC_4,    KC_5,    KC_6,    KC_MINUS, KC_ENT,
+          KC_VOLU,    LGUI(KC_LEFT),    KC_BTN2,  KC_BTN1, W1R,       KC_4,    KC_5,    KC_6,    KC_MINUS, KC_ENT,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
       KC_VOLD, LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), KC_1, KC_2, KC_3, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
@@ -104,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
       LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), KC_LBRC, KC_RBRC, RGUI_T(KC_M), KC_QUOT, LSFT(KC_QUOT), RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         KC_BSPC, ADJST_ESC, RGUI_T(KC_ENT), KC_SPC, RAISE_TAB
+                         KC_DEL, ADJST_ESC, RGUI_T(KC_ENT), KC_SPC, RAISE_TAB
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
