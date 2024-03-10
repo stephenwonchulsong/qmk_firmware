@@ -102,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
           KC_A,    KC_S,    KC_D,  KC_F, KC_G,       KC_H,    KC_LEFT,    KC_UP,    KC_DOWN, KC_RIGHT,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-      LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), KC_LBRC, KC_RBRC, RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
+      LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), KC_LBRC, KC_RBRC, RGUI_T(KC_M), KC_QUOT, LSFT(KC_QUOT), RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
                          KC_BSPC, ADJST_ESC, RGUI_T(KC_ENT), KC_SPC, RAISE_TAB
   //                   ╰───────────────────────────╯ ╰──────────────────╯
@@ -138,9 +138,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
           LGUI(KC_A),    KC_F3,    KC_D,  MOUSE_FFF, KC_G,       KC_H,    KC_CAPS,    KC_K,    KC_L, KC_SCLN,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-      LGUI(KC_Z), LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
+       KC_LSFT, LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         KC_BTN2, KC_BTN1, LGUI(KC_BTN1), KC_SPC, RAISE_TAB
+                         KC_BTN2, LGUI(KC_BTN1), KC_BTN1, KC_SPC, RAISE_TAB
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -164,19 +164,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           register_code(KC_DOT);
         }
       } else {
-        unregister_code(KC_9);
+        unregister_code(KC_0);
         unregister_code(KC_DOT);
       }
       return false;
     case KC_CMLP:
       if (record->event.pressed){
         if (get_mods() & MOD_BIT(KC_RSFT)){
-          register_code(KC_0);
+          register_code(KC_9);
         } else {
           register_code(KC_COMM);
         }
       } else {
-        unregister_code(KC_0);
+        unregister_code(KC_9);
         unregister_code(KC_COMM);
       }
       return false;
@@ -195,6 +195,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     default:
       return true;
   }
+}
+
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case RSFT_T(KC_SLSH):
+            // Immediately select the hold action when another key is pressed.
+            return true;
+        default:
+            // Do not select the hold action when another key is pressed.
+            return false;
+    }
 }
 
 // //Tap Dance for tap and hold
