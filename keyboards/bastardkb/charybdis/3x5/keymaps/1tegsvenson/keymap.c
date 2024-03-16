@@ -134,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_MOUSE] = LAYOUT(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-          KC_QTAB, LGUI(KC_W),    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+          LGUI(KC_Q), LGUI(KC_W),    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
           LGUI(KC_LEFT),    KC_F3,    KC_LGUI,  MOUSE_FFF, KC_G,       KC_H,    KC_CAPS,    KC_WH_U,    KC_WH_D, KC_SCLN,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
