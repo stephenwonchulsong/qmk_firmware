@@ -17,9 +17,7 @@
 
 /*
 qmk compile -c -kb bastardkb/charybdis/3x5/v2/splinky_2 -km 1tegsvenson -e VIA_ENABLE=yes
-qmk compile -c -kb bastardkb/charybdis/3x5/v2/splinky_2 -km 1tegsvenson
 qmk compile -c -kb bastardkb/charybdis/3x5/v2/splinky_3 -km 1tegsvenson
-qmk flash -c -kb bastardkb/charybdis/3x5/v2/splinky_2 -km 1tegsvenson
 qmk flash -c -kb bastardkb/charybdis/3x5/v2/splinky_3 -km 1tegsvenson
 */
 
@@ -201,6 +199,14 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case RSFT_T(KC_SLSH):
             // Immediately select the hold action when another key is pressed.
+            return true;
+        case LOWER_ESC:
+            return true;
+        case RAISE_TAB:
+            return true;
+        case ADJST_TAB:
+            return true;
+        case ADJST_ESC:
             return true;
         default:
             // Do not select the hold action when another key is pressed.
