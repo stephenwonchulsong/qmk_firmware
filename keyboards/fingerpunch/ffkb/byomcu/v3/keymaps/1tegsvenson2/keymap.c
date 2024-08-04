@@ -1,6 +1,6 @@
 // for flashing:
 // bin/fp_build.sh -k ffkb_byomcu/v3 -m 1tegsvenson2 -i -c stemcell -r
-// make fingerpunch/ffkb_byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
+// make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
 // qmk flash fingerpunch/ffkb_byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
 // make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
 #include QMK_KEYBOARD_H
@@ -16,7 +16,8 @@ enum layer_names {
     _COLEMAK,
     _CRKBD2,
     _EXTRA,
-    _SHIFT
+    _SHIFT,
+    _MOUSE
 };
 
 enum custom_keycodes {
@@ -78,11 +79,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ESCXTRA,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,   KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
+     ESCXTRA,   KC_A,    KC_S,    KC_D,    LT(_MOUSE, KC_F),    KC_G,                         KC_H,   KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  RSFT_T(KC_SLSH), SHIFTL,
+     SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  LT(_SHIFT, KC_SLSH), KC_LSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                DRAG_SCROLL, LOWERDEL, KC_LGUI,  KC_BTN1,   KC_BTN2, KC_SPC, RAISE,  KC_CAPS
+                                DRAG_SCROLL, KC_BSPC, LOWERDEL,  LCMD_T(KC_ENT),   KC_SPC, LT(_RAISE, KC_TAB), KC_CAPS,  KC_CAPS
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 // Default config uses home row mods. So hold each of the keys on the home row to use ctrl, gui, alt, or shift
@@ -154,9 +155,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,                          KC_7,    KC_8,    KC_9,    KC_0,   KC_MINS, KC_EQL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     GUIGRV,   KC_VOLD, KC_VOLU, KC_MUTE, CAPTURE,     W1R,                              KC_4, KC_5, KC_6, _______, _______, _______,
+     GUIGRV,   KC_VOLD, KC_VOLU, KC_MUTE, CAPTURE,     W1R,                      KC_4, KC_5, KC_6, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B),                      KC_1, KC_2, KC_3, _______, _______, _______,
+     _______, LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), KC_1, KC_2, KC_3, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 _______, _______, _______, _______,     _______, RAISEZERO, _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
@@ -182,7 +183,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      _______, _______, _______, _______, KC_PGUP, KC_HOME,                      _______, KC_LEFT,  KC_UP,  KC_DOWN, KC_RIGHT, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, _______, _______, _______, KC_PGDN,  KC_END,                      _______, _______, KC_LCBR, KC_RCBR, _______, _______,
+     _______, _______, _______, _______, KC_PGDN,  KC_END,                      KC_LBRC, KC_LBRC, KC_QUOT, KC_DQT, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 _______, _______, _______, _______,     _______, _______, _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
@@ -255,6 +256,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 _______, _______, _______, RGUI(KC_BTN1),     KC_BTN2, _______, KC_0, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
+),
+    [_MOUSE] = LAYOUT_ffkb(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+     KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_BSPC,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+     ESCXTRA,   KC_A,    KC_S,    KC_D,    LT(_MOUSE, KC_F),    KC_G,             KC_H,   KC_CAPS,  KC_K,    KC_L,  KC_SCLN, KC_ENT,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+     SFTSLSH,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M,  LSFT(KC_COMMA),  LSFT(KC_DOT),  KC_BSLS, SHIFTL,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                DRAG_SCROLL, KC_BSPC, LOWERDEL,  KC_BTN1,   KC_BTN2, LT(_RAISE, KC_TAB), KC_CAPS,  KC_CAPS
+                            //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|
   )
 };
 
