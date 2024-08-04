@@ -225,7 +225,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |             |      |      |      |      |      |      |
  * `-----------------------------------------'             `-----------------------------------------'
  *          ,------.        ,--------------------.    ,--------------------.        ,------.
- *          | MUTE |        |   \  | Enter| LOWER|    | RAISE| Space| Del  |        | DELW |
+ *          | MUTE |        |   \  | Enter| LOWER|    | RAISE| Space| Del  |        | DELW
  *          `------'        `--------------------'    `--------------------.        `------'
  */
 // [_MOUSE] =  LAYOUT_ffkb(
@@ -265,7 +265,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      SFTSLSH,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M,  LSFT(KC_COMMA),  LSFT(KC_DOT),  KC_BSLS, SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                DRAG_SCROLL, KC_BSPC, LOWERDEL,  KC_BTN1,   KC_BTN2, LT(_RAISE, KC_TAB), KC_CAPS,  KC_CAPS
+                                DRAG_SCROLL, KC_MS_WH_UP, KC_MS_WH_DOWN,  KC_BTN1,   KC_BTN2, LT(_RAISE, KC_TAB), KC_CAPS,  KC_CAPS
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|
   )
 };

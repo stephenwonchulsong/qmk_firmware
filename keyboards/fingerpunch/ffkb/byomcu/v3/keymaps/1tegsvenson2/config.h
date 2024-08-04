@@ -9,7 +9,7 @@
 #define TAPPING_TERM 350
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 #define PERMISSIVE_HOLD_PER_KEY
-#define IGNORE_MOD_TAP_INTERRUPT
+// #define IGNORE_MOD_TAP_INTERRUPT
 /*
 Copyright 2021 Sadek Baroudi <sadekbaroudi@gmail.com>
 
