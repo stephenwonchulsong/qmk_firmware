@@ -259,11 +259,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
     [_MOUSE] = LAYOUT_ffkb(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-     KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_BSPC,
+     MACNTAB,    KC_Q,    MACCLOSE,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ESCXTRA,   KC_A,    KC_S,    KC_D,    LT(_MOUSE, KC_F),    KC_G,             KC_H,   KC_CAPS,  KC_K,    KC_L,  KC_SCLN, KC_ENT,
+     ESCXTRA,   MACBACK,    KC_S,    MACFW,    LT(_MOUSE, KC_F),    KC_G,             KC_H,   KC_CAPS,  KC_K,    KC_L,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     SFTSLSH,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M,  LSFT(KC_COMMA),  LSFT(KC_DOT),  KC_BSLS, SHIFTL,
+     SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B),                         KC_N,    KC_M,  LSFT(KC_COMMA),  LSFT(KC_DOT),  KC_BSLS, SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 DRAG_SCROLL, KC_MS_WH_UP, KC_MS_WH_DOWN,  KC_BTN1,   KC_BTN2, LT(_RAISE, KC_TAB), KC_CAPS,  KC_CAPS
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|
