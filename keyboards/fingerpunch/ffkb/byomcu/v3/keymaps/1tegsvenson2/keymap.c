@@ -261,7 +261,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      MACNTAB,    LGUI(KC_Q),    MACCLOSE,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ESCXTRA,   MACBACK,  KC_S,    MACFW,    LT(_MOUSE, KC_F),    KC_G,             KC_H,   KC_CAPS,  KC_MS_WH_UP, KC_MS_WH_DOWN,  KC_SCLN, KC_ENT,
+     ESCXTRA,   MACBACK,  KC_MS_WH_UP, KC_MS_WH_DOWN,    LT(_MOUSE, KC_F),    KC_G,             KC_H,   KC_CAPS,  KC_MS_WH_UP, KC_MS_WH_DOWN,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B),                         KC_N,    KC_M,  LSFT(KC_COMMA),  LSFT(KC_DOT),  KC_BSLS, SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
