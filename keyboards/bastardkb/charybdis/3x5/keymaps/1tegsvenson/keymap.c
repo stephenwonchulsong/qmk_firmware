@@ -16,7 +16,9 @@
  */
 
 /*
+This one does not work
 qmk compile -c -kb bastardkb/charybdis/3x5/v2/splinky_2 -km 1tegsvenson -e VIA_ENABLE=yes
+The following works
 qmk compile -c -kb bastardkb/charybdis/3x5/v2/splinky_3 -km 1tegsvenson
 qmk flash -c -kb bastardkb/charybdis/3x5/v2/splinky_3 -km 1tegsvenson
 */
@@ -44,6 +46,8 @@ enum charybdis_keymap_layers {
 #define ADJST_TAB LT(LAYER_ADJST, KC_TAB)
 #define EXTRA_SLSH LT(LAYER_EXTRA, KC_SLSH)
 #define MOUSE_FFF LT(LAYER_MOUSE, KC_F)
+#define MACBACK LGUI(KC_LEFT)
+
 
 enum custom_keycodes {
     KC_DTRP = SAFE_RANGE,
@@ -65,6 +69,23 @@ enum custom_keycodes {
 //     }
 // }
 
+// Tap Dance declarations
+enum {
+    TD_COPY_PASTE,
+};
+
+// Tap Dance definitions
+tap_dance_action_t tap_dance_actions[] = {
+    // Tap once for Escape, twice for Caps Lock
+    [TD_COPY_PASTE] = ACTION_TAP_DANCE_DOUBLE(LGUI(KC_C), LGUI(KC_V)),
+};
+
+// Add tap dance item to your keymap in place of a keycode
+// const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+//     // ...
+//     TD(TD_COPY_PASTE)
+//     // ...
+// };
 
 
 // clang-format off
@@ -132,11 +153,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_MOUSE] = LAYOUT(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-          LGUI(KC_Q), LGUI(KC_W),    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+          LGUI(KC_Q), LGUI(KC_W),    KC_F3,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          LGUI(KC_LEFT),    KC_F3,    KC_LGUI,  MOUSE_FFF, KC_G,       KC_H,    KC_CAPS,    KC_WH_U,    KC_WH_D, KC_SCLN,
+        MACBACK, KC_MS_WH_UP, KC_MS_WH_DOWN, MOUSE_FFF, KC_G,       KC_H,    KC_CAPS,    KC_WH_U,    KC_WH_D, KC_SCLN,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_LSFT, LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
+       KC_LSFT, LGUI(KC_X), TD(TD_COPY_PASTE), KC_LGUI, LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
                          KC_BTN2, KC_BTN1, KC_ENT, KC_SPC, RAISE_TAB
   //                   ╰───────────────────────────╯ ╰──────────────────╯
@@ -349,5 +370,4 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 //     }
 //     return true;
 // }
-
 

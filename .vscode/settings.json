@@ -33,5 +33,6 @@
     "clangd.arguments": [
         "--header-insertion=never"
     ],
-    "cmake.sourceDirectory": "/Users/stephenwsong/Documents/GitHub/qmk_firmware/lib/googletest"
+    "cmake.sourceDirectory": "/Users/stephenwsong/Documents/GitHub/qmk_firmware/lib/googletest",
+    "makefile.configureOnOpen": false
 }
