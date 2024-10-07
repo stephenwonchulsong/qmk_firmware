@@ -565,6 +565,27 @@ NOTE: These are all the same length.  If you do a search/replace
 #define _______________AUTO_MOUSE_2________________     __AMOUSE_2_K1_, __AMOUSE_2_K2_, __AMOUSE_2_K3_, __AMOUSE_2_K4_, __AMOUSE_2_K5_
 #define _______________AUTO_MOUSE_3________________     __AMOUSE_3_K1_, __AMOUSE_3_K2_, __AMOUSE_3_K3_, __AMOUSE_3_K4_, __AMOUSE_3_K5_
 
+#define _MCRAFT_DROP_        KC_Q
+#define _MCRAFT_FWD_         KC_W
+#define _MCRAFT_SWAP_HAND_   KC_F
+
+#define _MCRAFT_SPRINT_      KC_LCTL
+#define _MCRAFT_LEFT_        KC_A
+#define _MCRAFT_BACK_        KC_S
+#define _MCRAFT_RIGHT_       KC_D
+#define _MCRAFT_INVENTORY_   KC_E
+
+#define _MCRAFT_SNEAK_       KC_LSFT
+
+#define _MCRAFT_NONE_        KC_NO
+
+#define _MCRAFT_JUMP_   KC_SPACE
+#define _MCRAFT_ENTER_  KC_ENTER
+
+#define _______________MINECRAFT_1_________________     _MCRAFT_DROP_,   _MCRAFT_NONE_, _MCRAFT_FWD_,  _MCRAFT_NONE_,  _MCRAFT_SWAP_HAND_
+#define _______________MINECRAFT_2_________________     _MCRAFT_SPRINT_, _MCRAFT_LEFT_, _MCRAFT_BACK_, _MCRAFT_RIGHT_, _MCRAFT_INVENTORY_
+#define _______________MINECRAFT_3_________________     _MCRAFT_SNEAK_,  _MCRAFT_NONE_, _MCRAFT_NONE_, _MCRAFT_NONE_,  _MCRAFT_NONE_
+
 //                                                      Zoom Home           Add Line            Add Arc            Add Polygon         Add Circle
 #define ___________________KICAD_0_________________     KC_HOME,            LCTL(LSFT(KC_L)),   LCTL(LSFT(KC_A)),  LCTL(LSFT(KC_P)),   LCTL(LSFT(KC_C))
 //                                                      Drag 45 degree      Move Dialog         Flip               Pos Relative        Select Net
