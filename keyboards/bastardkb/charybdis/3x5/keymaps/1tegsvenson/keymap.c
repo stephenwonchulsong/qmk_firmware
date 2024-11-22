@@ -47,6 +47,8 @@ enum charybdis_keymap_layers {
 #define EXTRA_SLSH LT(LAYER_EXTRA, KC_SLSH)
 #define MOUSE_FFF LT(LAYER_MOUSE, KC_F)
 #define MACBACK LGUI(KC_LEFT)
+#define LOWER_BSPC LT(LAYER_LOWER, KC_BSPC)
+#define ADJST_BSPC LT(LAYER_ADJST, KC_BSPC)
 
 
 enum custom_keycodes {
@@ -72,12 +74,14 @@ enum custom_keycodes {
 // Tap Dance declarations
 enum {
     TD_COPY_PASTE,
+    TD_P_ESC,
 };
 
 // Tap Dance definitions
 tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Escape, twice for Caps Lock
     [TD_COPY_PASTE] = ACTION_TAP_DANCE_DOUBLE(LGUI(KC_C), LGUI(KC_V)),
+    [TD_P_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_P, KC_ESC),
 };
 
 // Add tap dance item to your keymap in place of a keycode
@@ -86,6 +90,16 @@ tap_dance_action_t tap_dance_actions[] = {
 //     TD(TD_COPY_PASTE)
 //     // ...
 // };
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LOWER_BSPC:
+            return QUICK_TAP_TERM - 20;
+        case ADJST_BSPC:
+            return QUICK_TAP_TERM - 20;
+        default:
+            return QUICK_TAP_TERM;
+    }
+}
 
 
 // clang-format off
@@ -98,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
       LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_CMLP, KC_DTRP, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         KC_BSPC, LOWER_ESC, RGUI_T(KC_ENT), KC_SPC, RAISE_TAB
+                         KC_BTN1, LOWER_BSPC, RGUI_T(KC_ENT), KC_SPC, RAISE_TAB
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -110,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
       KC_VOLD, LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), KC_1, KC_2, KC_3, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         KC_BSPC, LOWER_ESC, RGUI_T(KC_ENT), KC_0, ADJST_TAB
+                         KC_BSPC, LOWER_BSPC, RGUI_T(KC_ENT), KC_0, ADJST_ESC
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -123,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
       LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), KC_LBRC, KC_RBRC, KC_QUOT, LSFT(KC_QUOT), RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         KC_DEL, ADJST_ESC, RGUI_T(KC_ENT), KC_SPC, RAISE_TAB
+                         KC_DEL, ADJST_BSPC, RGUI_T(KC_ENT), KC_SPC, RAISE_TAB
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -135,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
       LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), KC_EXLM, KC_AT, KC_HASH, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         KC_BSPC, LOWER_ESC, RGUI_T(KC_ENT), KC_RPRN, RAISE_TAB
+                         KC_BSPC, ADJST_BSPC, RGUI_T(KC_ENT), KC_RPRN, ADJST_ESC
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -147,7 +161,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
       LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         KC_BSPC, LOWER_ESC, RGUI_T(KC_ENT), KC_SPC, RAISE_TAB
+                         KC_BSPC, LOWER_BSPC, RGUI_T(KC_ENT), KC_SPC, RAISE_TAB
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -370,4 +384,3 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 //     }
 //     return true;
 // }
-
