@@ -154,11 +154,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_ffkb(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-     KC_1,    KC_2,    LCTL(LALT(KC_PGUP)),  LCTL(LALT(KC_UP)), LCTL(LALT(KC_HOME)),    CAPTURE,                          KC_7,    KC_8,    KC_9,    KC_MINS,   KC_MINS, KC_EQL,
+     KC_1,    KC_2,    LCTL(LALT(LGUI(KC_PGUP))),  LCTL(LALT(KC_UP)), LCTL(LALT(LGUI(KC_HOME))),    CAPTURE,                          KC_7,    KC_8,    KC_9,    KC_MINS,   KC_MINS, KC_EQL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      GUIGRV,   KC_VOLD, LCTL(LALT(KC_LEFT)), LCTL(LALT(KC_ENT)), LCTL(LALT(KC_RIGHT)),     W1R,                      KC_4, KC_5, KC_6, KC_KP_PLUS, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______,_______, LCTL(LALT(KC_PGDN)), LCTL(LALT(KC_DOWN)), LCTL(LALT(KC_END)), _______, KC_1, KC_2, KC_3, _______, _______, _______,
+     _______,_______, LCTL(LALT(LGUI(KC_PGDN))), LCTL(LALT(KC_DOWN)), LCTL(LALT(LGUI(KC_END))), _______, KC_1, KC_2, KC_3, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 _______, LOWERDEL, _______, _______,    _______, LT(_RAISE, KC_0), _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
