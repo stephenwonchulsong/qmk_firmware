@@ -266,7 +266,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B),                         KC_N,    KC_M,  LSFT(KC_COMMA),  LSFT(KC_DOT),  KC_BSLS, SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                DRAG_SCROLL, KC_BTN2, KC_DEL,  RGUI(KC_BTN1),   KC_BTN2, LT(_RAISE, KC_TAB), KC_CAPS,  KC_CAPS
+                                _______, KC_DEL, RGUI(RSFT(RALT(RCTL((KC_ENT))))), RGUI(KC_BTN1),   KC_BTN2, RGUI(RSFT(RALT(RCTL((KC_SPC))))), RGUI(RSFT(RALT(RCTL((KC_TAB))))),  KC_CAPS
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|
   )
 };
