@@ -16,11 +16,13 @@
  */
 
 /*
-This one does not work
-qmk compile -c -kb bastardkb/charybdis/3x5/v2/splinky_2 -km 1tegsvenson -e VIA_ENABLE=yes
 The following works
 qmk compile -c -kb bastardkb/charybdis/3x5/v2/splinky_3 -km 1tegsvenson
 qmk flash -c -kb bastardkb/charybdis/3x5/v2/splinky_3 -km 1tegsvenson
+
+This one does not work
+qmk compile -c -kb bastardkb/charybdis/3x5/v2/splinky_2 -km 1tegsvenson -e VIA_ENABLE=yes
+
 */
 
 #include QMK_KEYBOARD_H
