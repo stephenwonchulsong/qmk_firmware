@@ -120,13 +120,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_LOWER] = LAYOUT(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-          KC_QTAB, LSFT(LCTL(KC_TAB)),    KC_E,    LCTL(KC_TAB),    LGUI(LSFT(KC_5)),       KC_7,    KC_8,    KC_9,    KC_PLUS,    KC_EQL,
+          KC_QTAB, LCTL(LALT(LGUI(KC_PGUP))),  LCTL(LALT(KC_UP)), LCTL(LALT(LGUI(KC_HOME))),    LGUI(LSFT(KC_5)),       KC_7,    KC_8,    KC_9,    KC_PLUS,    KC_EQL,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          KC_VOLU,    LGUI(KC_LEFT),    KC_BTN2,  KC_BTN1, W1R,       KC_4,    KC_5,    KC_6,    KC_MINUS, KC_ENT,
+          KC_VOLU,    LCTL(LALT(KC_LEFT)), LCTL(LALT(KC_ENT)), LCTL(LALT(KC_RIGHT)), W1R,       KC_4,    KC_5,    KC_6,    KC_MINUS, KC_ENT,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-      KC_VOLD, LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), KC_1, KC_2, KC_3, KC_DOT, RSFT_T(KC_SLSH),
+      KC_VOLD, LCTL(LALT(LGUI(KC_PGDN))), LCTL(LALT(KC_DOWN)), LCTL(LALT(LGUI(KC_END))), LGUI_T(KC_B), KC_1, KC_2, KC_3, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         KC_BSPC, LOWER_BSPC, RGUI_T(KC_ENT), KC_0, ADJST_ESC
+                         KC_BTN1, LOWER_BSPC, RGUI_T(KC_ENT), KC_0, ADJST_ESC
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -175,7 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        KC_LSFT, LGUI(KC_X), TD(TD_COPY_PASTE), KC_LGUI, LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         KC_BTN1, KC_BTN2, KC_ENT, KC_SPC, KC_ESC
+                         KC_BTN1, KC_DEL, KC_BTN2, KC_SPC, KC_ESC
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
