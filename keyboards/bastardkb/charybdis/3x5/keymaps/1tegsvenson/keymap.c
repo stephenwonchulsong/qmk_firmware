@@ -173,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
         MACBACK, KC_MS_WH_UP, KC_MS_WH_DOWN, MOUSE_FFF, KC_G,       KC_H,    KC_CAPS,    KC_WH_U,    KC_WH_D, KC_SCLN,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_LSFT, LGUI(KC_X), TD(TD_COPY_PASTE), KC_LGUI, LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
+       KC_BTN3, LGUI(KC_X), TD(TD_COPY_PASTE), KC_LGUI, LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
                          KC_BTN1, KC_DEL, KC_BTN2, KC_SPC, KC_ESC
   //                   ╰───────────────────────────╯ ╰──────────────────╯
