@@ -2,7 +2,11 @@
 // bin/fp_build.sh -k ffkb_byomcu/v3 -m 1tegsvenson2 -i -c stemcell -r
 // make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
 // qmk flash fingerpunch/ffkb_byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
-// make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
+/*
+make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
+
+*/
+
 #include QMK_KEYBOARD_H
 
 // Defines names for use in layer keycodes and the keymap
@@ -59,6 +63,7 @@ bool is_drag_scroll = false;
 #define MACCUT LGUI(KC_X)
 #define MACPASTE LALT(LSFT(LGUI(KC_V))) // Paste without formatting: Option+Shift+Command+V
 #define MACUNDO LGUI(KC_Z)
+
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -154,11 +159,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_ffkb(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-     KC_1,    KC_2,    LCTL(LALT(LGUI(KC_PGUP))),  LCTL(LALT(KC_UP)), LCTL(LALT(LGUI(KC_HOME))),    CAPTURE,                          KC_7,    KC_8,    KC_9,    KC_MINS,   KC_MINS, KC_EQL,
+     KC_1,    GUIGRV, LCTL(LALT(LGUI(KC_PGUP))),  LCTL(LALT(KC_UP)), LCTL(LALT(LGUI(KC_HOME))),    LGUI(LSFT(KC_5)),   KC_7,    KC_8,    KC_9,    KC_KP_PLUS,   KC_MINS, KC_EQL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     GUIGRV,   KC_VOLD, LCTL(LALT(KC_LEFT)), LCTL(LALT(KC_ENT)), LCTL(LALT(KC_RIGHT)),     W1R,                      KC_4, KC_5, KC_6, KC_KP_PLUS, _______, _______,
+     GUIGRV,  KC_VOLU, LCTL(LALT(KC_LEFT)), LCTL(LALT(KC_ENT)), LCTL(LALT(KC_RIGHT)),     W1R,                      KC_4, KC_5, KC_6, KC_MINS, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______,_______, LCTL(LALT(LGUI(KC_PGDN))), LCTL(LALT(KC_DOWN)), LCTL(LALT(LGUI(KC_END))), _______, KC_1, KC_2, KC_3, _______, _______, _______,
+     _______, KC_VOLD, LCTL(LALT(LGUI(KC_PGDN))), LCTL(LALT(KC_DOWN)), LCTL(LALT(LGUI(KC_END))), LGUI_T(KC_B), KC_1, KC_2, KC_3, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 _______, LOWERDEL, _______, _______,    _______, LT(_RAISE, KC_0), _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
