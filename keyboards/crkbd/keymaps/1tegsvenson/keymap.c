@@ -1,10 +1,24 @@
-// for flashing:
-// bin/fp_build.sh -k ffkb_byomcu/v3 -m 1tegsvenson2 -i -c stemcell -r
-// make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
-// qmk flash fingerpunch/ffkb_byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
 /*
-make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
+Copyright 2019 @foostan
+Copyright 2020 Drashna Jaelre <@drashna>
 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/*
+qmk compile -c -kb crkbd/ -km 1tegsvenson
+qmk compile [-c] [-e <var>=<value>] [-j <num_jobs>] -kb <keyboard_name> -km <keymap_name>
 */
 
 #include QMK_KEYBOARD_H
@@ -23,7 +37,6 @@ enum layer_names {
     _SHIFT,
     _MOUSE
 };
-
 enum custom_keycodes {
     W1R = SAFE_RANGE,
     PHONE_1,
@@ -33,9 +46,7 @@ enum custom_keycodes {
     DRAG_SCROLL
 };
 
-
 bool is_drag_scroll = false;
-
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 #define EXTRA MO(_EXTRA)
@@ -65,10 +76,7 @@ bool is_drag_scroll = false;
 #define MACPASTE LALT(LSFT(LGUI(KC_V))) // Paste without formatting: Option+Shift+Command+V
 #define MACUNDO LGUI(KC_Z)
 
-
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
 /* Qwerty
  *
  * ,-----------------------------------------.             ,-----------------------------------------.
@@ -82,28 +90,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *          | MUTE |        |   \  | Enter| LOWER|    | RAISE| Space| Del  |        | DELW |
  *          `------'        `--------------------'    `--------------------.        `------'
  */
-[_QWERTY] = LAYOUT_ffkb(
+[_QWERTY] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ESCXTRA,   KC_A,    KC_S,    KC_D,    LT(_MOUSE, KC_F),    KC_G,                         KC_H,   KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
+     ESCXTRA,   KC_Q,    KC_S,    KC_D,    LT(_MOUSE, KC_F),    KC_G,             KC_H,   KC_J,    KC_K,     KC_L, KC_P,     KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  LT(_SHIFT, KC_SLSH), KC_LSFT,
+     LSFT_T(KC_Z), KC_A, LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  KC_SCLN, LT(_SHIFT, KC_SLSH),
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                KC_BSPC, LOWERBSPC,  LCMD_T(KC_ENT), KC_BTN1,  KC_BTN2, KC_SPC, LT(_RAISE, KC_TAB),  KC_CAPS
+                                KC_BSPC, LOWERBSPC,  LCMD_T(KC_ENT),  KC_SPC, LT(_RAISE, KC_TAB),  KC_CAPS
                             // `|--------+--------+--------+-------|'`|--------+--------+--------+--------|'
 ),
 // Default config uses home row mods. So hold each of the keys on the home row to use ctrl, gui, alt, or shift
 
-[_COLEMAK] = LAYOUT_ffkb(
+[_COLEMAK] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
  KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,                         KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN,   KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ESCXTRA,   KC_A,    KC_R,    KC_S,    KC_T,    KC_D,                         KC_H,   KC_N,    KC_E,     KC_I,  KC_O, KC_ENT,
+     ESCXTRA,   KC_Q,    KC_R,    KC_S,    KC_T,    KC_D,                         KC_H,   KC_N,    KC_E,     KC_I,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), KC_V, LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  RSFT_T(KC_SLSH), SHIFTL,
+     LSFT_T(KC_Z), KC_A, LCTL_T(KC_X), LALT_T(KC_C), KC_V, LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  RSFT_T(KC_SLSH), SHIFTL,
   ////|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                KC_BSPC, LOWERBSPC,  LCMD_T(KC_ENT), KC_BTN1,  KC_BTN2, KC_SPC, LT(_RAISE, KC_TAB),  KC_CAPS
+                                KC_BSPC, LOWERBSPC,  LCMD_T(KC_ENT), KC_SPC, LT(_RAISE, KC_TAB),  KC_CAPS
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -120,19 +128,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *          | MUTE |        |   \  | Enter| LOWER|    | RAISE| Space| Del  |        | DELW |
  *          `------'        `--------------------'    `--------------------.        `------'
  */
-[_NMIRYOKU] = LAYOUT_ffkb(
+[_NMIRYOKU] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ESCXTRA,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
+     ESCXTRA,   KC_Q,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     SFTSLSH,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, SHIFTL,
+     LSFT_T(KC_Z), KC_A,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                KC_BSPC, LOWERBSPC,  LCMD_T(KC_ENT), KC_BTN1,  KC_BTN2, KC_SPC, LT(_RAISE, KC_TAB),  KC_CAPS
+                                KC_BSPC, LOWERBSPC,  LCMD_T(KC_ENT), KC_SPC, LT(_RAISE, KC_TAB),  KC_CAPS
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|
 ),
 
-[_CRKBD2] = LAYOUT_ffkb(
+[_CRKBD2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -140,7 +148,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      SFTSLSH,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                KC_BSPC, LOWERBSPC,  LCMD_T(KC_ENT), KC_BTN1,  KC_BTN2, KC_SPC, LT(_RAISE, KC_TAB),  KC_CAPS
+                                KC_BSPC, LOWERBSPC,  LCMD_T(KC_ENT), KC_SPC, LT(_RAISE, KC_TAB),  KC_CAPS
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -158,7 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *          | MUTE |        |   \  | Enter| LOWER|    | RAISE| Space| Del  |        | DELW |
  *          `------'        `--------------------'    `--------------------.        `------'
  */
-[_LOWER] = LAYOUT_ffkb(
+[_LOWER] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      KC_1,    GUIGRV, LCTL(LALT(LGUI(KC_PGUP))),  LCTL(LALT(KC_UP)), LCTL(LALT(LGUI(KC_HOME))),    LGUI(LSFT(KC_5)),   KC_7,    KC_8,    KC_9,    KC_KP_PLUS,   KC_MINS, KC_EQL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -166,7 +174,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      _______, KC_VOLD, LCTL(LALT(LGUI(KC_PGDN))), LCTL(LALT(KC_DOWN)), LCTL(LALT(LGUI(KC_END))), LGUI_T(KC_B), KC_1, KC_2, KC_3, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                _______, LOWERDEL, _______, _______,    _______, LT(_RAISE, KC_0), _______, _______
+                                _______, LOWERDEL, _______,             LT(_RAISE, KC_0), _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -184,15 +192,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *          `------'        `--------------------'    `--------------------.        `------'
  */
 
-[_RAISE] = LAYOUT_ffkb(
+[_RAISE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      KC_F1, KC_F2,   KC_F3,    KC_F4,    KC_F5,   KC_F6,                         KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, _______, _______, _______, KC_PGUP, KC_HOME,                      _______, KC_LEFT,  KC_UP,  KC_DOWN, KC_RIGHT, _______,
+     _______, _______, _______, _______, KC_PGUP, KC_HOME,                      _______, KC_LEFT,  KC_UP,  KC_DOWN, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, _______, _______, _______, KC_PGDN,  KC_END,                      KC_LBRC, KC_LBRC, KC_QUOT, KC_DQT, _______, _______,
+     _______, _______, _______, _______, KC_PGDN,  KC_END,                      KC_LBRC, KC_LBRC, KC_QUOT, KC_DQT, KC_RIGHT, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                _______, _______, _______, _______,     _______, _______, _______, _______
+                                _______, _______, _______,              _______, _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -210,7 +218,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *          | MUTE |        |   \  | Enter| LOWER|    | RAISE| Space| Del  |        | DELW |
  *          `------'        `--------------------'    `--------------------.        `------'
  */
-[_ADJUST] =  LAYOUT_ffkb(
+[_ADJUST] =  LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      KC_EXLM,  KC_AT, KC_HASH,  KC_DLR, KC_PERC, KC_CIRC,                       KC_AMPR, KC_ASTR, KC_LPRN, 0, KC_UNDS, KC_PLUS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -218,7 +226,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      _______, _______, _______, _______, _______, TO(_NMIRYOKU),                 KC_EXLM,  KC_AT, KC_HASH, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                QK_BOOTLOADER, _______, _______, _______,     _______, _______, _______, _______
+                                QK_BOOTLOADER, _______, _______,         _______, KC_RPRN, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -235,13 +243,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *          | MUTE |        |   \  | Enter| LOWER|    | RAISE| Space| Del  |        | DELW
  *          `------'        `--------------------'    `--------------------.        `------'
  */
-// [_MOUSE] =  LAYOUT_ffkb(
+// [_MOUSE] =  LAYOUT_split_3x6_3(
 //   _______, _______, KC_WH_U, _______, KC_WH_D, _______,          _______, _______, _______, _______, _______, _______,
 //   _______, KC_WH_L, KC_BTN3, KC_BTN2, KC_BTN1, KC_WH_R,          _______, _______, _______, _______, _______, _______,
 //   _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______,
 //                     _______, _______, _______, _______,          _______, _______, _______, _______
 // ),
-[_SHIFT] = LAYOUT_ffkb(
+[_SHIFT] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
     RSFT(KC_TAB), RSFT(KC_Q), RSFT(KC_W), RSFT(KC_E), RSFT(KC_R), RSFT(KC_T), RSFT(KC_Y), RSFT(KC_U), RSFT(KC_I), RSFT(KC_O), RSFT(KC_P), RSFT(KC_BSPC),
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -249,11 +257,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     RSFT(KC_DQT), RSFT(KC_Z), RSFT(KC_X), RSFT(KC_C), RSFT(KC_V), RSFT(KC_B), RSFT(KC_N), RSFT(KC_M), RSFT(KC_LPRN), RSFT(KC_RPRN), RSFT(KC_SLSH), SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                            _______, _______, _______,  RSFT(KC_BTN1),   RSFT(KC_BTN2), RSFT(KC_SPC), _______, _______
+                            _______, _______, _______, RSFT(KC_SPC), _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
-  [_EXTRA] = LAYOUT_ffkb(
+  [_EXTRA] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      _______, MACNTAB, MACCLOSE, MACPTAB, M_TAB_RVS, KC_HOME,                   KC_7,    KC_8,    KC_9,   KC_KP_PLUS, KC_KP_ASTERISK, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -261,10 +269,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      _______, MACUNDO, MACCUT,  MACCOPY, MACPASTE, KC_WH_D,                     KC_1,    KC_2,    KC_3,   _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                _______, _______, _______, RGUI(KC_BTN1),     KC_BTN2, _______, KC_0, _______
+                                _______, _______, _______,                   _______, KC_0, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
-    [_MOUSE] = LAYOUT_ffkb(
+    [_MOUSE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      MACNTAB,    LGUI(KC_Q),    MACCLOSE,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -272,7 +280,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B),                         KC_N,    KC_M,  LSFT(KC_COMMA),  LSFT(KC_DOT),  KC_BSLS, SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                _______, KC_DEL, RGUI(RSFT(RALT(RCTL((KC_ENT))))), RGUI(KC_BTN1),   KC_BTN2, RGUI(RSFT(RALT(RCTL((KC_SPC))))), RGUI(RSFT(RALT(RCTL((KC_TAB))))),  KC_CAPS
+                                _______, KC_DEL, RGUI(RSFT(RALT(RCTL((KC_ENT))))),  RGUI(RSFT(RALT(RCTL((KC_SPC))))), RGUI(RSFT(RALT(RCTL((KC_TAB))))),  KC_CAPS
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|
   )
 };
@@ -280,60 +288,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
-
-// Encoder
-#ifdef ENCODER_MAP_ENABLE
-const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
-    [_QWERTY] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
-    [_NMIRYOKU] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
-    [_COLEMAK] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
-    [_CRKBD2] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
-    [_LOWER] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),              ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
-    [_RAISE] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),              ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
-    [_ADJUST] = { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),            ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
-    [_SHIFT] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  },
-    [_EXTRA] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),            ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  },
-    // [_MOUSE] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-};
-#endif
-
-//Encoder, but simpler config
-// #ifdef ENCODER_ENABLE
-// bool encoder_update_user(uint8_t index, bool clockwise) {
-//     // default behavior if undefined
-//     if (index == 0) {
-//         // Conditional to reverse the direction of encoder number 1
-//         // The reason I have this is that for some of my boards, it supports two different types of encoders, and they may differ in direction
-//         #ifdef ENCODERS_A_REVERSE
-//         if (!clockwise) {
-//         #else
-//         if (clockwise) {
-//         #endif
-//             tap_code(KC_VOLU);
-//         } else {
-//             tap_code(KC_VOLD);
-//         }
-//     }
-//     else if (index == 1) {
-//       // Conditional to reverse the direction of encoder number 1
-//       // The reason I have this is that for some of my boards, it supports two different types of encoders, and they may differ in direction
-//       #ifdef ENCODERS_B_REVERSE
-//       if (!clockwise) {
-//       #else
-//       if (clockwise) {
-//       #endif
-//         press_super_tab(true);
-//       }
-//       else{
-//         press_super_tab(false);
-//       }
-//     }
-
-//     return true;
-// }
-// #endif
-
-
 
 // Macro definitions
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
@@ -399,16 +353,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     return true;
 }
 
-//   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-//      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
-//   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
-//   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
-//   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-//                                 _______, _______, _______, _______,     _______, _______, _______, _______
-//                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
-
 //improved hold tap for lower and raise
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -440,34 +384,5 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         default:
             // Do not select the hold action when another key is tapped.
             return false;
-    }
-}
-
-
-// The real magic is here.
-// This function is called to translate the processed sensor movement
-// from the mouse sensor and translates it into x and y movement for
-// the mouse report. Normally.  So if "drag scroll" is toggled on,
-// moving the ball scrolls instead.  You could remove the  x or y here
-//  to only scroll in one direction, if you wanted, as well. In fact,
-// there is no reason that you need to send this to the mouse report.
-// You could have it register a key, instead.
-void process_mouse_user(report_mouse_t* mouse_report, int16_t x, int16_t y) {
-    if (is_drag_scroll) {
-        mouse_report->h = -x;
-        mouse_report->v = y;
-    } else {
-        mouse_report->x = x;
-        mouse_report->y = y;
-    }
-}
-
-void process_wheel_user(report_mouse_t* mouse_report, int16_t h, int16_t v) {
-    if (is_drag_scroll) {
-        mouse_report->h = -v;
-        mouse_report->v = h;
-    } else {
-        mouse_report->h = h;
-        mouse_report->v = v;
     }
 }
