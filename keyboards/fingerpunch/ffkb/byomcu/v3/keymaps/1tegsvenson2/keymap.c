@@ -30,6 +30,9 @@ enum custom_keycodes {
     TEMP1,
     TEMP2,
     TEMP3,
+    parencite,
+    textbf,
+    textit,
     DRAG_SCROLL
 };
 
@@ -217,7 +220,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      _______, _______, _______, _______, _______, TO(_NMIRYOKU),                 KC_EXLM,  KC_AT, KC_HASH, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                QK_BOOTLOADER, _______, _______, _______,     _______, _______, _______, _______
+                                QK_BOOTLOADER, _______, _______, _______,     _______, KC_LPRN, _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -285,15 +288,26 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [_QWERTY] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
     [_NMIRYOKU] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
-    [_COLEMAK] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
-    [_CRKBD2] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
     [_LOWER] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),              ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
     [_RAISE] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),              ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
     [_ADJUST] = { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),            ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
-    [_SHIFT] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  },
+    [_COLEMAK] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
+    [_CRKBD2] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
     [_EXTRA] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),            ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  },
-    // [_MOUSE] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+    [_SHIFT] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  },
+    [_MOUSE] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
 };
+    // _QWERTY,
+    // _NMIRYOKU,
+    // _LOWER,
+    // _RAISE,
+    // _ADJUST,
+    // // _MOUSE,
+    // _COLEMAK,
+    // _CRKBD2,
+    // _EXTRA,
+    // _SHIFT,
+    // _MOUSE
 #endif
 
 //Encoder, but simpler config
@@ -363,6 +377,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
             SEND_STRING("You did a great job analyzing ");
             return false;
         }
+        break;
+    case  parencite:
+        if (record->event.pressed)
+        {
+            SEND_STRING("\raskjclfk[][]{}");
+            SS_TAP(X_LEFT);
+            return false;
+        }
+    case  textbf:
+        if (record->event.pressed)
+        {
+            SS_TAP(X_LCBR);
+            SS_TAP(X_LEFT);
+            SS_TAP(X_LEFT);
+            SEND_STRING("\fkxfbe");
+            SS_DOWN(X_LALT);
+            SS_TAP(X_RIGHT);
+            SS_TAP(X_RIGHT);
+            SS_TAP(X_RIGHT);
+            return false;
+        }
+    case  textit:
+        if (record->event.pressed)
+        {
+            SS_TAP(X_LCBR);
+            SS_TAP(X_LEFT);
+            SS_TAP(X_LEFT);
+            SEND_STRING("\fkxflf");
+            SS_DOWN(X_LALT);
+            SS_TAP(X_RIGHT);
+            SS_TAP(X_RIGHT);
+            SS_TAP(X_RIGHT);
+            return false;
+        }
+
         break;
     // case DRAG_SCROLL: //scrolling with trackball
     //         is_drag_scroll ^= 1;
