@@ -193,7 +193,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      _______, _______, _______, _______, KC_PGUP, KC_HOME,                      _______, KC_LEFT,  KC_UP,  KC_DOWN, KC_RIGHT, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, _______, _______, _______, KC_PGDN,  KC_END,                      KC_LBRC, KC_LBRC, KC_QUOT, KC_DQT, _______, _______,
+     _______, _______, _______, _______, KC_PGDN,  KC_END,                      KC_LBRC, KC_RBRC, KC_QUOT, KC_DQT, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 _______, _______, _______, _______,     _______, _______, _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
@@ -215,13 +215,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] =  LAYOUT_ffkb(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-     KC_EXLM,  KC_AT, KC_HASH,  KC_DLR, KC_PERC, KC_CIRC,                       KC_AMPR, KC_ASTR, KC_LPRN, 0, KC_UNDS, KC_PLUS,
+     KC_EXLM,  KC_AT, KC_HASH,  KC_DLR, KC_PERC, KC_CIRC,                       KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, _______, _______, _______, _______, TO(_QWERTY),                  KC_DLR, KC_PERC, KC_CIRC, _______, _______, _______,
+     _______, _______, _______, _______, _______, TO(_QWERTY),                  KC_DLR, KC_PERC, KC_CIRC, KC_UNDS, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      _______, _______, _______, _______, _______, TO(_NMIRYOKU),                 KC_EXLM,  KC_AT, KC_HASH, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                QK_BOOTLOADER, _______, _______, _______,     _______, KC_LPRN, _______, _______
+                                QK_BOOTLOADER, _______, _______, _______,     _______, KC_RPRN, _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -271,9 +271,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      MACNTAB,    LGUI(KC_Q),    MACCLOSE,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ESCXTRA,   MACBACK,  KC_MS_WH_UP, KC_MS_WH_DOWN,    LT(_MOUSE, KC_F),    KC_G,             KC_H,   KC_CAPS,  KC_MS_WH_UP, KC_MS_WH_DOWN,  KC_SCLN, KC_ENT,
+     ESCXTRA,   MACBACK,  KC_MS_WH_UP, KC_MS_WH_DOWN,    LT(_MOUSE, KC_F),    KC_G,             KC_H,   KC_CAPS,  KC_MS_WH_UP, textit,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B),                         KC_N,    KC_M,  LSFT(KC_COMMA),  LSFT(KC_DOT),  KC_BSLS, SHIFTL,
+     SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), textbf,                         KC_N,    KC_M,  LSFT(KC_COMMA),  LSFT(KC_DOT),  KC_BSLS, SHIFTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 _______, KC_DEL, RGUI(RSFT(RALT(RCTL((KC_ENT))))), RGUI(KC_BTN1),   KC_BTN2, RGUI(RSFT(RALT(RCTL((KC_SPC))))), RGUI(RSFT(RALT(RCTL((KC_TAB))))),  KC_CAPS
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|
@@ -383,36 +383,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         if (record->event.pressed)
         {
             SEND_STRING("\raskjclfk[][]{}");
-            SS_TAP(X_LEFT);
+            SEND_STRING(SS_TAP(X_LEFT));
             return false;
         }
+        break;
     case  textbf:
         if (record->event.pressed)
         {
-            SS_TAP(X_LCBR);
-            SS_TAP(X_LEFT);
-            SS_TAP(X_LEFT);
+            SEND_STRING(SS_DOWN(X_LSFT)SS_TAP(X_LBRC)SS_UP(X_LSFT)SS_TAP(X_LEFT)SS_TAP(X_LEFT));
             SEND_STRING("\fkxfbe");
-            SS_DOWN(X_LALT);
-            SS_TAP(X_RIGHT);
-            SS_TAP(X_RIGHT);
-            SS_TAP(X_RIGHT);
             return false;
         }
+        break;
     case  textit:
         if (record->event.pressed)
         {
-            SS_TAP(X_LCBR);
-            SS_TAP(X_LEFT);
-            SS_TAP(X_LEFT);
+            SEND_STRING(SS_DOWN(X_LSFT)SS_TAP(X_LBRC)SS_UP(X_LSFT)SS_TAP(X_LEFT)SS_TAP(X_LEFT));
             SEND_STRING("\fkxflf");
-            SS_DOWN(X_LALT);
-            SS_TAP(X_RIGHT);
-            SS_TAP(X_RIGHT);
-            SS_TAP(X_RIGHT);
             return false;
         }
-
         break;
     // case DRAG_SCROLL: //scrolling with trackball
     //         is_drag_scroll ^= 1;
