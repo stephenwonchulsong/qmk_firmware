@@ -89,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ESCXTRA,   KC_A,    KC_S,    KC_D,    LT(_MOUSE, KC_F),    KC_G,                         KC_H,   KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
+     ESCXTRA,   LCTL_T(KC_A), LALT_T(KC_S), LGUI_T(KC_D), LT(_MOUSE, KC_F),    LGUI_T(KC_G),                         KC_H,   KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      SFTSLSH,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  LT(_SHIFT, KC_SLSH), KC_LSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
