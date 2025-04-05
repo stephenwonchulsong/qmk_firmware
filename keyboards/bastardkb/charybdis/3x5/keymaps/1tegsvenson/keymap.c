@@ -46,8 +46,8 @@ enum charybdis_keymap_layers {
 #define ADJST_ESC LT(LAYER_ADJST, KC_ESC)
 #define RAISE_TAB LT(LAYER_RAISE, KC_TAB)
 #define ADJST_TAB LT(LAYER_ADJST, KC_TAB)
-#define EXTRA_SLSH LT(LAYER_EXTRA, KC_SLSH)
-#define MOUSE_FFF LT(LAYER_MOUSE, KC_F)
+#define EXTRA_FFF LT(LAYER_EXTRA, KC_F)
+#define MOUSE_DDD LT(LAYER_MOUSE, KC_D)
 #define MACBACK LGUI(KC_LEFT)
 #define LOWER_BSPC LT(LAYER_LOWER, KC_BSPC)
 #define ADJST_BSPC LT(LAYER_ADJST, KC_BSPC)
@@ -59,7 +59,10 @@ enum custom_keycodes {
     KC_QTAB,
     LOWER_GESC,
     ADJST_GESC,
-    W1R
+    W1R,
+    parencite,
+    textbf,
+    textit,
 };
 
 
@@ -110,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
           KC_QTAB,    KC_W,    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          KC_A,    KC_S,    KC_D,  MOUSE_FFF, KC_G,       KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,
+          KC_A,    KC_S,    MOUSE_DDD,  EXTRA_FFF, KC_G,       KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
       LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_CMLP, KC_DTRP, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
@@ -135,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
           KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,       KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          KC_A,    KC_S,    KC_D,  KC_F, KC_G,       KC_H,    KC_LEFT,    KC_UP,    KC_DOWN, KC_RIGHT,
+          KC_LSFT,    KC_LCTL,    KC_LALT,  KC_LGUI, KC_LGUI,       KC_H,    KC_LEFT,    KC_UP,    KC_DOWN, KC_RIGHT,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
       LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), KC_LBRC, KC_RBRC, KC_QUOT, LSFT(KC_QUOT), RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
@@ -159,9 +162,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
           KC_QTAB,    KC_W,    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          KC_A,    KC_S,    KC_D,  KC_F, KC_G,       KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,
+          KC_A,    KC_S,    KC_D, EXTRA_FFF, KC_G,       parencite,    KC_CAPS,    textbf,    textit, KC_SCLN,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-      LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
+      LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), KC_LBRC, KC_RBRC, KC_COMM, KC_DOT, KC_BSLS,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
                          KC_BSPC, LOWER_BSPC, RGUI_T(KC_ENT), KC_SPC, RAISE_TAB
   //                   ╰───────────────────────────╯ ╰──────────────────╯
@@ -171,11 +174,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
           LGUI(KC_Q), LGUI(KC_W),    KC_F3,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-        MACBACK, KC_MS_WH_UP, KC_MS_WH_DOWN, MOUSE_FFF, KC_G,       KC_H,    KC_CAPS,    KC_WH_U,    KC_WH_D, KC_SCLN,
+        MACBACK, KC_MS_WH_UP, MOUSE_DDD, KC_ESC, KC_G,       KC_H,    KC_CAPS,    KC_WH_U,    KC_WH_D, KC_SCLN,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_BTN3, LGUI(KC_X), TD(TD_COPY_PASTE), KC_LGUI, LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
+       KC_BTN3, KC_MS_WH_DOWN, TD(TD_COPY_PASTE), KC_LGUI, LGUI_T(KC_B), RGUI_T(KC_N), RGUI_T(KC_M), KC_COMM, KC_DOT, RSFT_T(KC_SLSH),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         KC_BTN1, KC_DEL, KC_BTN2, KC_SPC, KC_ESC
+                         KC_BTN1, LGUI(KC_BTN1), KC_BTN2, KC_SPC, KC_ESC
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -185,6 +188,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //changing behavior for RSFT and RGUI
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    // case DRAG_SCROLL: //scrolling with trackball
+    //     is_drag_scroll ^= 1;
+    //     if (record->event.pressed)
+    //         fp_set_cpi(100);
+    //     else
+    //         fp_set_cpi(spi_read[keymap_config.dpi_config]);
+    //     break;
+    case  parencite:
+    if (record->event.pressed)
+    {
+        SEND_STRING("\raskjclfk[][]{}");
+        SEND_STRING(SS_TAP(X_LEFT));
+        return false;
+    }
+    break;
+case  textbf:
+    if (record->event.pressed)
+    {
+        SEND_STRING(SS_DOWN(X_LSFT)SS_TAP(X_LBRC)SS_UP(X_LSFT)SS_TAP(X_LEFT)SS_TAP(X_LEFT));
+        SEND_STRING("\fkxfbe");
+        return false;
+    }
+    break;
+case  textit:
+    if (record->event.pressed)
+    {
+        SEND_STRING(SS_DOWN(X_LSFT)SS_TAP(X_LBRC)SS_UP(X_LSFT)SS_TAP(X_LEFT)SS_TAP(X_LEFT));
+        SEND_STRING("\fkxflf");
+        return false;
+    }
     case W1R:
       if (record->event.pressed)
         {
