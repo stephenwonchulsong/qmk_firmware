@@ -60,6 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENCODERS_PAD_A {C6, E6}
 #define ENCODERS_PAD_B {D7, B4}
 
+#define TAPPING_TERM_PER_KEY
 
 // #ifdef FP_EVQ
 // #define ENCODERS_A_REVERSE

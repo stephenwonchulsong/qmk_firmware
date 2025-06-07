@@ -4,7 +4,7 @@
 // qmk flash fingerpunch/ffkb_byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
 /*
 make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
-
+make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=elite_pi
 */
 
 #include QMK_KEYBOARD_H
@@ -35,7 +35,6 @@ enum custom_keycodes {
     textit,
     DRAG_SCROLL
 };
-
 
 bool is_drag_scroll = false;
 
@@ -436,6 +435,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     }
     return true;
 }
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(_SHIFT, KC_SLSH):
+            return 130;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
 
 //   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
 //      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
