@@ -131,6 +131,11 @@ expanded before being used as arguments to the LAYOUT_xxx macro.
 #    define LAYOUT LAYOUT_ximi
 #endif
 
+// Since ximega uses the name LAYOUT_ximega instead of LAYOUT
+#if (!defined(LAYOUT) && defined(LAYOUT_ximega))
+#    define LAYOUT LAYOUT_ximega
+#endif
+
 // Since badwings uses the name LAYOUT_badwings instead of LAYOUT
 #if (!defined(LAYOUT) && defined(LAYOUT_badwings))
 #    define LAYOUT LAYOUT_badwings
@@ -201,6 +206,16 @@ expanded before being used as arguments to the LAYOUT_xxx macro.
 #    define LAYOUT LAYOUT_kucheza
 #endif
 
+// Since LAYOUT_le_chiffre_democratique uses the name LAYOUT_le_chiffre_democratique instead of LAYOUT
+#if (!defined(LAYOUT) && defined(LAYOUT_le_chiffre_democratique))
+#    define LAYOUT LAYOUT_le_chiffre_democratique
+#endif
+
+// Since LAYOUT_le_chiffre_democratique uses the name LAYOUT_le_chiffre_democratique instead of LAYOUT
+#if (!defined(LAYOUT) && defined(LAYOUT_smallcat))
+#    define LAYOUT LAYOUT_smallcat
+#endif
+
 // clang-format off
 #define LAYOUT_ergodox_wrapper(...)          LAYOUT_ergodox(__VA_ARGS__)
 #define LAYOUT_ergodox_pretty_wrapper(...)   LAYOUT_ergodox_pretty(__VA_ARGS__)
@@ -234,13 +249,16 @@ NOTE: These are all the same length.  If you do a search/replace
 #define __ALPHA_THUMB_R2__ KC_SPACE
 #define __ALPHA_THUMB_R3__ KC_QUOT
 
-#define __ALPHA_THUMBS_LEFT_2__                             __ALPHA_THUMB_L2__, __ALPHA_THUMB_L3__
-#define __ALPHA_THUMBS_RIGHT_2__                            __ALPHA_THUMB_R1__, __ALPHA_THUMB_R2__
+#define __ALPHA_THUMBS_LEFT_2_TUCKY__                             __ALPHA_THUMB_L1__, __ALPHA_THUMB_L2__
+#define __ALPHA_THUMBS_RIGHT_2_TUCKY__                            __ALPHA_THUMB_R2__, __ALPHA_THUMB_R3__
+
+#define __ALPHA_THUMBS_LEFT_2_REACHY__                             __ALPHA_THUMB_L2__, __ALPHA_THUMB_L3__
+#define __ALPHA_THUMBS_RIGHT_2_REACHY__                            __ALPHA_THUMB_R1__, __ALPHA_THUMB_R2__
 
 #define __ALPHA_THUMBS_LEFT_3__                             __ALPHA_THUMB_L1__, __ALPHA_THUMB_L2__, __ALPHA_THUMB_L3__
 #define __ALPHA_THUMBS_RIGHT_3__                            __ALPHA_THUMB_R1__, __ALPHA_THUMB_R2__, __ALPHA_THUMB_R3__
 
-#define __ALPHA_THUMBS_4__                                  __ALPHA_THUMBS_LEFT_2__, __ALPHA_THUMBS_RIGHT_2__
+#define __ALPHA_THUMBS_4__                                  __ALPHA_THUMBS_LEFT_2_REACHY__, __ALPHA_THUMBS_RIGHT_2_REACHY__
 #define __ALPHA_THUMBS_5__                                  __ALPHA_THUMB_L1__, __ALPHA_THUMB_L2__, __ALPHA_THUMB_R1__, __ALPHA_THUMB_R2__, __ALPHA_THUMB_R3__
 #define __ALPHA_THUMBS_6__                                  __ALPHA_THUMBS_LEFT_3__, __ALPHA_THUMBS_RIGHT_3__
 
@@ -251,13 +269,16 @@ NOTE: These are all the same length.  If you do a search/replace
 #define __ALPHA_ALT_THUMB_R2__ __ALPHA_THUMB_R2__
 #define __ALPHA_ALT_THUMB_R3__ __ALPHA_THUMB_R3__
 
-#define __ALPHA_ALT_THUMBS_LEFT_2__                         __ALPHA_ALT_THUMB_L2__, __ALPHA_ALT_THUMB_L3__
-#define __ALPHA_ALT_THUMBS_RIGHT_2__                        __ALPHA_ALT_THUMB_R1__, __ALPHA_ALT_THUMB_R2__
+#define __ALPHA_ALT_THUMBS_LEFT_2_TUCKY__                         __ALPHA_ALT_THUMB_L1__, __ALPHA_ALT_THUMB_L2__
+#define __ALPHA_ALT_THUMBS_RIGHT_2_TUCKY__                        __ALPHA_ALT_THUMB_R2__, __ALPHA_ALT_THUMB_R3__
+
+#define __ALPHA_ALT_THUMBS_LEFT_2_REACHY__                         __ALPHA_ALT_THUMB_L2__, __ALPHA_ALT_THUMB_L3__
+#define __ALPHA_ALT_THUMBS_RIGHT_2_REACHY__                        __ALPHA_ALT_THUMB_R1__, __ALPHA_ALT_THUMB_R2__
 
 #define __ALPHA_ALT_THUMBS_LEFT_3__                         __ALPHA_ALT_THUMB_L1__, __ALPHA_ALT_THUMB_L2__, __ALPHA_ALT_THUMB_L3__
 #define __ALPHA_ALT_THUMBS_RIGHT_3__                        __ALPHA_ALT_THUMB_R1__, __ALPHA_ALT_THUMB_R2__, __ALPHA_ALT_THUMB_R3__
 
-#define __ALPHA_ALT_THUMBS_4__                              __ALPHA_ALT_THUMBS_LEFT_2__, __ALPHA_ALT_THUMBS_RIGHT_2__
+#define __ALPHA_ALT_THUMBS_4__                              __ALPHA_ALT_THUMBS_LEFT_2_REACHY__, __ALPHA_ALT_THUMBS_RIGHT_2_REACHY__
 #define __ALPHA_ALT_THUMBS_5__                              __ALPHA_ALT_THUMB_L1__, __ALPHA_ALT_THUMB_L2__, __ALPHA_ALT_THUMB_R1__, __ALPHA_ALT_THUMB_R2__, __ALPHA_ALT_THUMB_R3__
 #define __ALPHA_ALT_THUMBS_6__                              __ALPHA_ALT_THUMBS_LEFT_3__, __ALPHA_ALT_THUMBS_RIGHT_3__
 
@@ -267,19 +288,43 @@ NOTE: These are all the same length.  If you do a search/replace
 #define __ALPHA_ALT_L1_K4__ KC_P
 #define __ALPHA_ALT_L1_K5__ KC_B
 
+#define __ALPHA_ALT_L2_K1__ KC_A
+#define __ALPHA_ALT_L2_K2__ KC_R
+#define __ALPHA_ALT_L2_K3__ KC_S
+#define __ALPHA_ALT_L2_K4__ KC_T
+#define __ALPHA_ALT_L2_K5__ KC_G
+
+#define __ALPHA_ALT_L3_K1__ KC_Z
+#define __ALPHA_ALT_L3_K2__ KC_X
+#define __ALPHA_ALT_L3_K3__ KC_C
+#define __ALPHA_ALT_L3_K4__ KC_D
+#define __ALPHA_ALT_L3_K5__ KC_V
+
 #define __ALPHA_ALT_R1_K1__ KC_J
 #define __ALPHA_ALT_R1_K2__ KC_L
 #define __ALPHA_ALT_R1_K3__ KC_U
 #define __ALPHA_ALT_R1_K4__ KC_Y
 #define __ALPHA_ALT_R1_K5__ KC_SCLN
 
+#define __ALPHA_ALT_R2_K1__ KC_M
+#define __ALPHA_ALT_R2_K2__ KC_N
+#define __ALPHA_ALT_R2_K3__ KC_E
+#define __ALPHA_ALT_R2_K4__ KC_I
+#define __ALPHA_ALT_R2_K5__ KC_H
+
+#define __ALPHA_ALT_R3_K1__ KC_K
+#define __ALPHA_ALT_R3_K2__ KC_NO
+#define __ALPHA_ALT_R3_K3__ KC_COMM
+#define __ALPHA_ALT_R3_K4__ KC_DOT
+#define __ALPHA_ALT_R3_K5__ KC_SLASH
+
 #define _________________ALPHA_ALT_L1_________________			__ALPHA_ALT_L1_K1__,    __ALPHA_ALT_L1_K2__,    __ALPHA_ALT_L1_K3__,    __ALPHA_ALT_L1_K4__,    __ALPHA_ALT_L1_K5__
-#define _________________ALPHA_ALT_L2_________________			KC_A,    KC_R,    KC_S,    KC_T,    KC_G
-#define _________________ALPHA_ALT_L3_________________			KC_Z,    KC_X,    KC_C,    KC_D,    KC_V
+#define _________________ALPHA_ALT_L2_________________			__ALPHA_ALT_L2_K1__,    __ALPHA_ALT_L2_K2__,    __ALPHA_ALT_L2_K3__,    __ALPHA_ALT_L2_K4__,    __ALPHA_ALT_L2_K5__
+#define _________________ALPHA_ALT_L3_________________			__ALPHA_ALT_L3_K1__,    __ALPHA_ALT_L3_K2__,    __ALPHA_ALT_L3_K3__,    __ALPHA_ALT_L3_K4__,    __ALPHA_ALT_L3_K5__
 
 #define _________________ALPHA_ALT_R1_________________			__ALPHA_ALT_R1_K1__,    __ALPHA_ALT_R1_K2__,    __ALPHA_ALT_R1_K3__,    __ALPHA_ALT_R1_K4__,    __ALPHA_ALT_R1_K5__
-#define _________________ALPHA_ALT_R2_________________			KC_M,    KC_N,    KC_E,    KC_I,    KC_H
-#define _________________ALPHA_ALT_R3_________________			KC_K,    KC_NO,   KC_COMM, KC_DOT,  KC_SLASH
+#define _________________ALPHA_ALT_R2_________________			__ALPHA_ALT_R2_K1__,    __ALPHA_ALT_R2_K2__,    __ALPHA_ALT_R2_K3__,    __ALPHA_ALT_R2_K4__,    __ALPHA_ALT_R2_K5__
+#define _________________ALPHA_ALT_R3_________________			__ALPHA_ALT_R3_K1__,    __ALPHA_ALT_R3_K2__,    __ALPHA_ALT_R3_K3__,    __ALPHA_ALT_R3_K4__,    __ALPHA_ALT_R3_K5__
 
 /* This is the target
 #define _________________ALPHA_ALT_L1_________________			KC_ENT,  KC_Q,    KC_W,    KC_P,    KC_B
@@ -297,20 +342,44 @@ NOTE: These are all the same length.  If you do a search/replace
 #define __ALPHA_L1_K4__ KC_P
 #define __ALPHA_L1_K5__ KC_B
 
+#define __ALPHA_L2_K1__ KC_A
+#define __ALPHA_L2_K2__ KC_R
+#define __ALPHA_L2_K3__ KC_S
+#define __ALPHA_L2_K4__ KC_T
+#define __ALPHA_L2_K5__ KC_G
+
+#define __ALPHA_L3_K1__ KC_Z
+#define __ALPHA_L3_K2__ KC_X
+#define __ALPHA_L3_K3__ KC_C
+#define __ALPHA_L3_K4__ KC_D
+#define __ALPHA_L3_K5__ KC_V
+
 #define __ALPHA_R1_K1__ KC_J
 #define __ALPHA_R1_K2__ KC_L
 #define __ALPHA_R1_K3__ KC_U
 #define __ALPHA_R1_K4__ KC_Y
 #define __ALPHA_R1_K5__ KC_SCLN
 
-// ALPHA
-#define __________________ALPHA_L1____________________			KC_Q,    KC_W,    KC_F,    KC_P,    KC_B
-#define __________________ALPHA_L2____________________			KC_A,    KC_R,    KC_S,    KC_T,    KC_G
-#define __________________ALPHA_L3____________________			KC_Z,    KC_X,    KC_C,    KC_D,    KC_V
+#define __ALPHA_R2_K1__ KC_M
+#define __ALPHA_R2_K2__ KC_N
+#define __ALPHA_R2_K3__ KC_E
+#define __ALPHA_R2_K4__ KC_I
+#define __ALPHA_R2_K5__ KC_O
 
-#define __________________ALPHA_R1____________________			KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN
-#define __________________ALPHA_R2____________________			KC_M,    KC_N,    KC_E,    KC_I,    KC_O
-#define __________________ALPHA_R3____________________			KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLASH
+#define __ALPHA_R3_K1__ KC_K
+#define __ALPHA_R3_K2__ KC_H
+#define __ALPHA_R3_K3__ KC_COMM
+#define __ALPHA_R3_K4__ KC_DOT
+#define __ALPHA_R3_K5__ KC_SLASH
+
+// ALPHA
+#define __________________ALPHA_L1____________________			__ALPHA_L1_K1__,    __ALPHA_L1_K2__,    __ALPHA_L1_K3__,    __ALPHA_L1_K4__,    __ALPHA_L1_K5__
+#define __________________ALPHA_L2____________________			__ALPHA_L2_K1__,    __ALPHA_L2_K2__,    __ALPHA_L2_K3__,    __ALPHA_L2_K4__,    __ALPHA_L2_K5__
+#define __________________ALPHA_L3____________________			__ALPHA_L3_K1__,    __ALPHA_L3_K2__,    __ALPHA_L3_K3__,    __ALPHA_L3_K4__,    __ALPHA_L3_K5__
+
+#define __________________ALPHA_R1____________________			__ALPHA_R1_K1__,    __ALPHA_R1_K2__,    __ALPHA_R1_K3__,    __ALPHA_R1_K4__,    __ALPHA_R1_K5__
+#define __________________ALPHA_R2____________________			__ALPHA_R2_K1__,    __ALPHA_R2_K2__,    __ALPHA_R2_K3__,    __ALPHA_R2_K4__,    __ALPHA_R2_K5__
+#define __________________ALPHA_R3____________________			__ALPHA_R3_K1__,    __ALPHA_R3_K2__,    __ALPHA_R3_K3__,    __ALPHA_R3_K4__,    __ALPHA_R3_K5__
 
 // BLANK FULL LINE
 #define ___________________BLANK___________________			_______, _______, _______, _______, _______
@@ -435,27 +504,27 @@ NOTE: These are all the same length.  If you do a search/replace
 #define ________________SHIFTNAV_2_________________			__SHIFTNAV_2_K1__, __SHIFTNAV_2_K2__, __SHIFTNAV_2_K3__, __SHIFTNAV_2_K4__, __SHIFTNAV_2_K5__
 #define ________________SHIFTNAV_3_________________			__SHIFTNAV_3_K1__, __SHIFTNAV_3_K2__, __SHIFTNAV_3_K3__, __SHIFTNAV_3_K4__, __SHIFTNAV_3_K5__
 
-#define __FUNCION_1_K1__ KC_MPLY
-#define __FUNCION_1_K2__ KC_F7
-#define __FUNCION_1_K3__ KC_F8
-#define __FUNCION_1_K4__ KC_F9
-#define __FUNCION_1_K5__ KC_F10
+#define __FUNCTION_1_K1__ KC_MPLY
+#define __FUNCTION_1_K2__ KC_F7
+#define __FUNCTION_1_K3__ KC_F8
+#define __FUNCTION_1_K4__ KC_F9
+#define __FUNCTION_1_K5__ KC_F10
 
-#define __FUNCION_2_K1__ KC_VOLU
-#define __FUNCION_2_K2__ KC_F4
-#define __FUNCION_2_K3__ KC_F5
-#define __FUNCION_2_K4__ KC_F6
-#define __FUNCION_2_K5__ KC_F11
+#define __FUNCTION_2_K1__ KC_VOLU
+#define __FUNCTION_2_K2__ KC_F4
+#define __FUNCTION_2_K3__ KC_F5
+#define __FUNCTION_2_K4__ KC_F6
+#define __FUNCTION_2_K5__ KC_F11
 
-#define __FUNCION_3_K1__ KC_VOLD
-#define __FUNCION_3_K2__ KC_F1
-#define __FUNCION_3_K3__ KC_F2
-#define __FUNCION_3_K4__ KC_F3
-#define __FUNCION_3_K5__ KC_F12
+#define __FUNCTION_3_K1__ KC_VOLD
+#define __FUNCTION_3_K2__ KC_F1
+#define __FUNCTION_3_K3__ KC_F2
+#define __FUNCTION_3_K4__ KC_F3
+#define __FUNCTION_3_K5__ KC_F12
 
-#define ________________FUNCTION_1_________________			__FUNCION_1_K1__, __FUNCION_1_K2__, __FUNCION_1_K3__, __FUNCION_1_K4__, __FUNCION_1_K5__
-#define ________________FUNCTION_2_________________			__FUNCION_2_K1__, __FUNCION_2_K2__, __FUNCION_2_K3__, __FUNCION_2_K4__, __FUNCION_2_K5__
-#define ________________FUNCTION_3_________________			__FUNCION_3_K1__, __FUNCION_3_K2__, __FUNCION_3_K3__, __FUNCION_3_K4__, __FUNCION_3_K5__
+#define ________________FUNCTION_1_________________			__FUNCTION_1_K1__, __FUNCTION_1_K2__, __FUNCTION_1_K3__, __FUNCTION_1_K4__, __FUNCTION_1_K5__
+#define ________________FUNCTION_2_________________			__FUNCTION_2_K1__, __FUNCTION_2_K2__, __FUNCTION_2_K3__, __FUNCTION_2_K4__, __FUNCTION_2_K5__
+#define ________________FUNCTION_3_________________			__FUNCTION_3_K1__, __FUNCTION_3_K2__, __FUNCTION_3_K3__, __FUNCTION_3_K4__, __FUNCTION_3_K5__
 
 // MEDIA LAYER
 
@@ -554,6 +623,27 @@ NOTE: These are all the same length.  If you do a search/replace
 #define _______________AUTO_MOUSE_1________________     __AMOUSE_1_K1_, __AMOUSE_1_K2_, __AMOUSE_1_K3_, __AMOUSE_1_K4_, __AMOUSE_1_K5_
 #define _______________AUTO_MOUSE_2________________     __AMOUSE_2_K1_, __AMOUSE_2_K2_, __AMOUSE_2_K3_, __AMOUSE_2_K4_, __AMOUSE_2_K5_
 #define _______________AUTO_MOUSE_3________________     __AMOUSE_3_K1_, __AMOUSE_3_K2_, __AMOUSE_3_K3_, __AMOUSE_3_K4_, __AMOUSE_3_K5_
+
+#define _MCRAFT_DROP_        KC_Q
+#define _MCRAFT_FWD_         KC_W
+#define _MCRAFT_SWAP_HAND_   KC_F
+
+#define _MCRAFT_SPRINT_      KC_LCTL
+#define _MCRAFT_LEFT_        KC_A
+#define _MCRAFT_BACK_        KC_S
+#define _MCRAFT_RIGHT_       KC_D
+#define _MCRAFT_INVENTORY_   KC_E
+
+#define _MCRAFT_SNEAK_       KC_LSFT
+
+#define _MCRAFT_NONE_        KC_NO
+
+#define _MCRAFT_JUMP_   KC_SPACE
+#define _MCRAFT_ENTER_  KC_ENTER
+
+#define _______________MINECRAFT_1_________________     _MCRAFT_DROP_,   _MCRAFT_NONE_, _MCRAFT_FWD_,  _MCRAFT_NONE_,  _MCRAFT_SWAP_HAND_
+#define _______________MINECRAFT_2_________________     _MCRAFT_SPRINT_, _MCRAFT_LEFT_, _MCRAFT_BACK_, _MCRAFT_RIGHT_, _MCRAFT_INVENTORY_
+#define _______________MINECRAFT_3_________________     _MCRAFT_SNEAK_,  _MCRAFT_NONE_, _MCRAFT_NONE_, _MCRAFT_NONE_,  _MCRAFT_NONE_
 
 //                                                      Zoom Home           Add Line            Add Arc            Add Polygon         Add Circle
 #define ___________________KICAD_0_________________     KC_HOME,            LCTL(LSFT(KC_L)),   LCTL(LSFT(KC_A)),  LCTL(LSFT(KC_P)),   LCTL(LSFT(KC_C))

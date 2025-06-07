@@ -117,10 +117,6 @@ __attribute__((weak)) void shutdown_keymap(void) {}
 
 void rgb_matrix_update_pwm_buffers(void);
 
-void shutdown_user(void) {
-    shutdown_keymap();
-}
-
 __attribute__((weak)) void suspend_power_down_keymap(void) {}
 
 void suspend_power_down_user(void) { suspend_power_down_keymap(); }
@@ -134,12 +130,6 @@ __attribute__((weak)) void matrix_scan_keymap(void) {}
 // No global matrix scan code, so just run keymap's matrix
 // scan function
 void matrix_scan_user(void) {
-    static bool has_ran_yet;
-    if (!has_ran_yet) {
-        has_ran_yet = true;
-        startup_user();
-    }
-
 #if defined(LEADER_ENABLE)
     matrix_scan_leader_key();
 #endif
@@ -183,7 +173,12 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // I always type the shift keys too fast, so tapping term of 200 is way too high
         case LSFT_T(KC_T):
         case RSFT_T(KC_N):
+#ifdef KEYBOARD_fingerpunch_personal_smallcat
+            // There is an exception for smallcat, since the tapping term seems to be too short only on that board
+            return 150;
+#else
             return 75;
+#endif
         default:
             return TAPPING_TERM;
     }

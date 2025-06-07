@@ -2,7 +2,12 @@
 
 // check to see if we are using the stenographobe, and skip if so... it has its own whole combo scheme
 // see keyboards/fingerpunch/stenographobe/keymaps/*/config.h
-#ifndef KEYBOARD_fingerpunch_stenographobe
+#if defined(KEYBOARD_fingerpunch_stenographobe)
+#elif defined(KEYBOARD_fingerpunch_arachnophobe)
+#define COMBO_COUNT 15
+#elif defined(KEYBOARD_fingerpunch_personal_smallcat)
+#define COMBO_COUNT 53
+#else
 #define COMBO_COUNT 15
 #endif
 
@@ -30,6 +35,10 @@
 
 #define LEADER_TIMEOUT 300
 #define LEADER_PER_KEY_TIMING
+
+// -------------------- Tap dance config ------------------------
+#define TAPPING_TERM 175
+#define TAPPING_TERM_PER_KEY
 
 // ----------------- Cirque curved overlay override -----------------
 
@@ -172,8 +181,8 @@
 
 // To enable this, just pass RGB_LED_RING=yes at the command line when building
 #if defined(RGBLIGHT_ENABLE) && defined(RGB_LED_RING)
-#undef RGBLED_NUM
-#define RGBLED_NUM 12
+#undef RGBLIGHT_LED_COUNT
+#define RGBLIGHT_LED_COUNT 12
 #endif
 
 // To enable this, just pass RGB_MATRIX_BAND_VAL_LAYERS=yes at the command line when building

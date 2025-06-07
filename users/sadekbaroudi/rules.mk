@@ -62,3 +62,6 @@ ifeq ($(strip $(AUDIO_ENABLE)), yes)
     SRC += audio_userspace.c
 endif
 
+ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
+    SRC += tapdances.c
+endif
