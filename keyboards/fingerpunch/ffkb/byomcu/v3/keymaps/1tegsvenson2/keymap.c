@@ -464,6 +464,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
      case LOWERDEL:
      case ESCXTRA:
      case SFTSLSH:
+     case LT(_SHIFT, KC_SLSH):
+     case LCMD_T(KC_ENT):
         return true;
      default:
         return false;
