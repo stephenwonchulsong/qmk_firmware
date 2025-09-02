@@ -36,6 +36,7 @@ enum custom_keycodes {
     ,textit
     ,DRAG_SCROLL
     ,MACBACK
+    // ,f12_combo
 };
 
 bool is_drag_scroll = false;
@@ -532,6 +533,10 @@ void process_wheel_user(report_mouse_t* mouse_report, int16_t h, int16_t v) {
         mouse_report->v = v;
     }
 }
-
-
-
+//combos
+const uint16_t PROGMEM f12_combo[] = {KC_BTN1, KC_BTN2, COMBO_END};
+// const uint16_t PROGMEM test_combo2[] = {KC_C, KC_D, COMBO_END};
+combo_t key_combos[] = {
+    COMBO(f12_combo, KC_F12),
+    // COMBO(test_combo2, LCTL(KC_Z)), // keycodes with modifiers are possible too!
+};
