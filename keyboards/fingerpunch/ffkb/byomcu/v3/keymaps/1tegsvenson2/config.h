@@ -70,3 +70,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef FP_EC11
 #define ENCODERS_C_REVERSE
 #endif
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY

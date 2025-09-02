@@ -26,15 +26,16 @@ enum layer_names {
 };
 
 enum custom_keycodes {
-    W1R = SAFE_RANGE,
-    PHONE_1,
-    TEMP1,
-    TEMP2,
-    TEMP3,
-    parencite,
-    textbf,
-    textit,
-    DRAG_SCROLL
+    W1R = SAFE_RANGE
+    ,PHONE_1
+    ,TEMP1
+    ,TEMP2
+    ,TEMP3
+    ,parencite
+    ,textbf
+    ,textit
+    ,DRAG_SCROLL
+    ,MACBACK
 };
 
 bool is_drag_scroll = false;
@@ -58,7 +59,6 @@ bool is_drag_scroll = false;
 #define CAPTURE LGUI(LSFT(KC_5))
 #define GUIGRV LGUI(KC_GRV)
 #define MACCLOSE LGUI(KC_W)
-#define MACBACK LGUI(KC_LBRC)
 #define MACFW LGUI(KC_RIGHT)
 #define MACPTAB LCTL(KC_TAB)            // Previous tab for MAC
 #define MACNTAB LCTL(LSFT(KC_TAB))      // Next tab for MAC
@@ -91,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+-------|
      QK_GESC,   LCTL_T(KC_A), LALT_T(KC_S), LT(_MOUSE, KC_D), LT(_EXTRA, KC_F),    LGUI_T(KC_G), KC_H,   KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     MACBACK,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  LT(_SHIFT, KC_SLSH), KC_LSFT,
+     LSFT_T(LGUI(KC_LBRC)),   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  LT(_SHIFT, KC_SLSH), KC_LSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 KC_F12, LOWERBSPC,  LCMD_T(KC_ENT), KC_BTN1,  KC_BTN2, LSFT_T(KC_SPC), LT(_RAISE, KC_TAB),  KC_F18
                             // `|--------+--------+--------+-------|'`|--------+--------+--------+--------|'
@@ -434,6 +434,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
             return false;
         }
         break;
+    case MACBACK:
+        if (record->event.pressed)
+        {
+            SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_LBRC)SS_UP(X_LGUI)); // Command + [
+            return false;
+        }
+        break;
     }
     return true;
 }
@@ -469,6 +476,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
      case SFTSLSH:
      case LT(_SHIFT, KC_SLSH):
      case LCMD_T(KC_ENT):
+     case LSFT_T(MACBACK):
+     case LT(_RAISE, KC_TAB):
         return true;
      default:
         return false;
@@ -523,4 +532,6 @@ void process_wheel_user(report_mouse_t* mouse_report, int16_t h, int16_t v) {
         mouse_report->v = v;
     }
 }
+
+
 
