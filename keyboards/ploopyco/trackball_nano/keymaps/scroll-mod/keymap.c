@@ -73,9 +73,9 @@
      return 0; // Don't repeat
  }
 
- void keyboard_post_init_user(void) {
-     defer_exec(INITIALIZATION_TIMEOUT, initialization_timeout, NULL);
- }
+//  void keyboard_post_init_user(void) {
+//      defer_exec(INITIALIZATION_TIMEOUT, initialization_timeout, NULL);
+//  }
 
  bool led_update_user(led_t led_state) {
      if (!initialized)
@@ -85,13 +85,13 @@
      return true;
  }
 
- void suspend_power_down_user(void) {
-     // Switch off sensor + LED making trackball unable to wake host
-     initialized = false;
-     adns5050_power_down();
- }
+//  void suspend_power_down_user(void) {
+//      // Switch off sensor + LED making trackball unable to wake host
+//      initialized = false;
+//      adns5050_power_down();
+//  }
 
- void suspend_wakeup_init_user(void) {
-     adns5050_init();
-     defer_exec(INITIALIZATION_TIMEOUT, initialization_timeout, NULL);
- }
+//  void suspend_wakeup_init_user(void) {
+//      adns5050_init();
+//      defer_exec(INITIALIZATION_TIMEOUT, initialization_timeout, NULL);
+//  }
