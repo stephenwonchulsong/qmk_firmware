@@ -61,6 +61,7 @@ bool is_drag_scroll = false;
 #define MACPTAB LCTL(KC_TAB)            // Previous tab for MAC
 #define MACNTAB LCTL(LSFT(KC_TAB))      // Next tab for MAC
 #define M_TAB_RVS LGUI(LSFT(KC_T))      // Reopen tab for MAC
+#define MACBACK LGUI(KC_LBRC)           // Back for MAC (Cmd+[)
 #define MACCOPY LGUI(KC_C)
 #define MACCUT LGUI(KC_X)
 #define MACPASTE LALT(LSFT(LGUI(KC_V))) // Paste without formatting: Option+Shift+Command+V
@@ -89,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+-------|
      QK_GESC,   LCTL_T(KC_A), LALT_T(KC_S), LT(_MOUSE, KC_D), LT(_EXTRA, KC_F),    LGUI_T(KC_G), KC_H,   KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     LSFT_T(LGUI(KC_LBRC)),   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  LT(_SHIFT, KC_SLSH), KC_LSFT,
+    MACBACK,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  LT(_SHIFT, KC_SLSH), KC_LSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 KC_F12, LOWERBSPC,  LCMD_T(KC_ENT), KC_BTN1,  KC_BTN2, LSFT_T(KC_SPC), LT(_RAISE, KC_TAB),  KC_F18
                             // `|--------+--------+--------+-------|'`|--------+--------+--------+--------|'
@@ -220,6 +221,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|
   )
 };
+
+void keyboard_post_init_user(void) {
+    default_layer_set(1UL << _QWERTY);
+}
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
