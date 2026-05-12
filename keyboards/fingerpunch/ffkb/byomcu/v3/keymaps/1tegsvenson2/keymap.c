@@ -295,9 +295,68 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
 
 
 
+// File-scope state for deferred double-tap actions (needed by matrix_scan_user)
+static uint16_t gui_v_td_timer   = 0;
+static bool     gui_v_td_pending = false;
+static uint16_t gui_w_td_timer   = 0;
+static bool     gui_w_td_pending = false;
+
+// Fire deferred single-tap actions once the double-tap window expires
+void matrix_scan_user(void) {
+    if (gui_v_td_pending && timer_elapsed(gui_v_td_timer) >= TAPPING_TERM) {
+        gui_v_td_pending = false;
+        tap_code16(LGUI(KC_V));
+    }
+    if (gui_w_td_pending && timer_elapsed(gui_w_td_timer) >= TAPPING_TERM) {
+        gui_w_td_pending = false;
+        tap_code16(LGUI(KC_W));
+    }
+}
+
 // Macro definitions
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
+    if (keycode == LGUI_T(KC_V) && record->event.pressed) {
+        if (get_mods() & (MOD_BIT(KC_LGUI) | MOD_BIT(KC_RGUI))) {
+            if (gui_v_td_pending && timer_elapsed(gui_v_td_timer) < TAPPING_TERM) {
+                // Double-tap: cancel deferred Cmd+V, only paste without formatting
+                gui_v_td_pending = false;
+                uint8_t saved_mods = get_mods();
+                clear_mods();
+                tap_code16(LALT(LSFT(LGUI(KC_V))));
+                set_mods(saved_mods);
+                return false;
+            }
+            // First tap: defer Cmd+V so a second tap can cancel it
+            gui_v_td_timer   = timer_read();
+            gui_v_td_pending = true;
+            return false;
+        } else {
+            gui_v_td_pending = false;
+        }
+    }
+
+    // Double-tap W with LGUI held: 1st tap = Cmd+W, 2nd tap = Cmd+Shift+W (ARC browser).
+    if (keycode == KC_W && record->event.pressed) {
+        if (get_mods() & (MOD_BIT(KC_LGUI) | MOD_BIT(KC_RGUI))) {
+            if (gui_w_td_pending && timer_elapsed(gui_w_td_timer) < TAPPING_TERM) {
+                // Double-tap: cancel deferred Cmd+W, only fire Cmd+Shift+W
+                gui_w_td_pending = false;
+                uint8_t saved_mods = get_mods();
+                clear_mods();
+                tap_code16(LGUI(LSFT(KC_W)));
+                set_mods(saved_mods);
+                return false;
+            }
+            // First tap: defer Cmd+W so a second tap can cancel it
+            gui_w_td_timer   = timer_read();
+            gui_w_td_pending = true;
+            return false;
+        } else {
+            gui_w_td_pending = false;
+        }
+    }
+
     switch (keycode)
     {
     case TEMP1: //copy-pasting to another app
