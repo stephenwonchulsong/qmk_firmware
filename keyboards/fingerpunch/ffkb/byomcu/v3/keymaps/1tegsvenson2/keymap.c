@@ -86,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = LAYOUT_ffkb(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-     KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   DF(_COLEMNK),
+     KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_F17,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+-------|
      QK_GESC,   LCTL_T(KC_A), LALT_T(KC_S), LT(_MOUSE, KC_D), LT(_EXTRA, KC_F),    LGUI_T(KC_G), KC_H,   KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
