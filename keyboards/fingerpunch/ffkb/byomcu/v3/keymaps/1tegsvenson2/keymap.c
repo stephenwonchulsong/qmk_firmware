@@ -5,6 +5,7 @@ make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABL
 qmk flash fingerpunch/ffkb_byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
 
 make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
+
 make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=elite_pi
 */
 
@@ -17,8 +18,8 @@ enum layer_names {
     _LOWER,
     _RAISE,
     _ADJUST,
-    _EXTRA,
     _SHIFT,
+    _EXTRA,
     _MOUSE
 };
 
@@ -37,6 +38,23 @@ enum custom_keycodes {
 };
 
 bool is_drag_scroll = false;
+
+// Tap Dance declarations
+typedef enum {
+    TD_NONE,
+    TD_SINGLE_TAP,
+    TD_SINGLE_HOLD,
+} td_state_t;
+
+enum {
+    TD_MACBACK_LSFT,
+};
+
+static td_state_t td_macback_state = TD_NONE;
+
+td_state_t cur_dance(tap_dance_state_t *state);
+void macback_lsft_finished(tap_dance_state_t *state, void *user_data);
+void macback_lsft_reset(tap_dance_state_t *state, void *user_data);
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
@@ -90,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+-------|
      QK_GESC,   LCTL_T(KC_A), LALT_T(KC_S), LT(_MOUSE, KC_D), LT(_EXTRA, KC_F),    LGUI_T(KC_G), KC_H,   KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    MACBACK,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  LT(_SHIFT, KC_SLSH), KC_LSFT,
+    TD(TD_MACBACK_LSFT),   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), LGUI_T(KC_B), RGUI_T(KC_N), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  LT(_SHIFT, KC_SLSH), KC_LSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 KC_F12, LOWERBSPC,  LCMD_T(KC_ENT), KC_BTN1,  KC_BTN2, LSFT_T(KC_SPC), LT(_RAISE, KC_TAB),  KC_F18
                             // `|--------+--------+--------+-------|'`|--------+--------+--------+--------|'
@@ -204,7 +222,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      _______, MACBACK, M_TAB_RVS, MACFW, KC_BTN3, KC_WH_U,                      KC_4,    KC_5,    KC_6,   KC_KP_MINUS, KC_KP_SLASH, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, MACUNDO, MACCUT,  MACCOPY, MACPASTE, KC_WH_D,                     KC_1,    KC_2,    KC_3,   _______, _______, _______,
+     _______, MACUNDO, MACCUT,  MACCOPY, MACPASTE, KC_WH_D,                     KC_1,    KC_2,    KC_3,   _______, KC_BSLS, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 _______, _______, _______, KC_BTN2,     RGUI(KC_BTN1), _______, KC_0, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
@@ -242,7 +260,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     // [_CRKBD2] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_WH_L, KC_WH_R)  },
     [_EXTRA] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),            ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  },
     [_SHIFT] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  },
-    [_MOUSE] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+    [_MOUSE] =  { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),  ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  },
 };
     // _QWERTY,
     // _NMIRYOKU,
@@ -543,4 +561,45 @@ const uint16_t PROGMEM f12_combo[] = {KC_BTN1, KC_BTN2, COMBO_END};
 combo_t key_combos[] = {
     COMBO(f12_combo, KC_F12),
     // COMBO(test_combo2, LCTL(KC_Z)), // keycodes with modifiers are possible too!
+};
+
+// Tap Dance: tap = MACBACK (Cmd+[), hold = Left Shift
+td_state_t cur_dance(tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
+        else return TD_SINGLE_HOLD;
+    }
+    return TD_NONE;
+}
+
+void macback_lsft_finished(tap_dance_state_t *state, void *user_data) {
+    td_macback_state = cur_dance(state);
+    switch (td_macback_state) {
+        case TD_SINGLE_TAP:
+            register_code16(LGUI(KC_LBRC));
+            break;
+        case TD_SINGLE_HOLD:
+            register_mods(MOD_BIT(KC_LSFT));
+            break;
+        default:
+            break;
+    }
+}
+
+void macback_lsft_reset(tap_dance_state_t *state, void *user_data) {
+    switch (td_macback_state) {
+        case TD_SINGLE_TAP:
+            unregister_code16(LGUI(KC_LBRC));
+            break;
+        case TD_SINGLE_HOLD:
+            unregister_mods(MOD_BIT(KC_LSFT));
+            break;
+        default:
+            break;
+    }
+    td_macback_state = TD_NONE;
+}
+
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_MACBACK_LSFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, macback_lsft_finished, macback_lsft_reset),
 };
