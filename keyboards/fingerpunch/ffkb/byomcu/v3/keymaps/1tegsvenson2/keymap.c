@@ -1,10 +1,7 @@
 // for flashing:
 // bin/fp_build.sh -k ffkb_byomcu/v3 -m 1tegsvenson2 -i -c stemcell -r
 /*
-make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
-qmk flash fingerpunch/ffkb_byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
 
-make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=stemcell
 
 make fingerpunch/ffkb/byomcu/v3:1tegsvenson2 CIRQUE_ENABLE=no FP_TRACKBALL_ENABLE=yes RGB_MATRIX_ENABLE=no FP_EC11=yes CONVERT_TO=elite_pi
 */
@@ -44,10 +41,22 @@ typedef enum {
     TD_NONE,
     TD_SINGLE_TAP,
     TD_SINGLE_HOLD,
+    TD_DOUBLE_TAP,
+    TD_TRIPLE_TAP,
 } td_state_t;
 
 enum {
     TD_MACBACK_LSFT,
+    // Window management tap dances (from ZMK)
+    TD_LEFTTOP,
+    TD_TOPTOP,
+    TD_RIGHTTOP,
+    TD_LEFTLEFT,
+    TD_CENTERCENTER,
+    TD_RIGHTRIGHT,
+    TD_LEFTBOT,
+    TD_BOTBOT,
+    TD_RIGHTBOT,
 };
 
 static td_state_t td_macback_state = TD_NONE;
@@ -55,6 +64,10 @@ static td_state_t td_macback_state = TD_NONE;
 td_state_t cur_dance(tap_dance_state_t *state);
 void macback_lsft_finished(tap_dance_state_t *state, void *user_data);
 void macback_lsft_reset(tap_dance_state_t *state, void *user_data);
+
+// Window management tap dance forward declarations
+void winmgmt_finished(tap_dance_state_t *state, void *user_data);
+void winmgmt_reset(tap_dance_state_t *state, void *user_data);
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
@@ -142,13 +155,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_ffkb(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-     KC_1,    GUIGRV, LCTL(LALT(LGUI(KC_PGUP))),  LCTL(LALT(KC_UP)), LCTL(LALT(LGUI(KC_HOME))),    LGUI(LSFT(KC_5)),   KC_7,    KC_8,    KC_9,    KC_KP_PLUS,   KC_MINS, KC_EQL,
+     KC_1,    GUIGRV, TD(TD_LEFTTOP), TD(TD_TOPTOP), TD(TD_RIGHTTOP), LGUI(LSFT(KC_5)),   KC_7,    KC_8,    KC_9,    KC_KP_PLUS,   KC_MINS, KC_EQL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______,  KC_VOLU, LCTL(LALT(KC_LEFT)), LCTL(LALT(KC_ENT)), LCTL(LALT(KC_RIGHT)),     W1R,                      KC_4, KC_5, KC_6, KC_MINS, _______, _______,
+     _______,  KC_VOLU, TD(TD_LEFTLEFT), TD(TD_CENTERCENTER), TD(TD_RIGHTRIGHT), W1R,   KC_4, KC_5, KC_6, KC_MINS, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, KC_VOLD, LCTL(LALT(LGUI(KC_PGDN))), LCTL(LALT(KC_DOWN)), LCTL(LALT(LGUI(KC_END))), LGUI_T(KC_B), KC_1, KC_2, KC_3, _______, _______, _______,
+     _______, KC_VOLD, TD(TD_LEFTBOT), TD(TD_BOTBOT), TD(TD_RIGHTBOT), LGUI_T(KC_B), KC_1, KC_2, KC_3, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                _______, LOWERDEL, _______, KC_BTN2,    _______, LT(_RAISE, KC_0), _______, _______
+                                _______, _______, _______, KC_BTN2,    _______, KC_0, _______, _______
                             //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -472,6 +485,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(_SHIFT, KC_SLSH):
             return 130;
+        case LT(_ADJUST, KC_0):
+        case LT(_ADJUST, KC_TAB):
+        case LOWERBSPC:
+            return 100;
         default:
             return TAPPING_TERM;
     }
@@ -501,6 +518,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
      case LCMD_T(KC_ENT):
      case LSFT_T(MACBACK):
      case LT(_RAISE, KC_TAB):
+     case LT(_ADJUST, KC_0):
+     case LT(_ADJUST, KC_TAB):
         return true;
      default:
         return false;
@@ -511,6 +530,11 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(1, KC_BSPC):
+        // QWERTY home row mods
+        case LCTL_T(KC_A):
+        case LALT_T(KC_S):
+        case LGUI_T(KC_G):
+        // Shared / Colemak bottom-row mods
         case LSFT_T(KC_Z):
         case LCTL_T(KC_X):
         case LALT_T(KC_C):
@@ -568,6 +592,10 @@ td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
         if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
         else return TD_SINGLE_HOLD;
+    } else if (state->count == 2) {
+        return TD_DOUBLE_TAP;
+    } else if (state->count >= 3) {
+        return TD_TRIPLE_TAP;
     }
     return TD_NONE;
 }
@@ -600,6 +628,47 @@ void macback_lsft_reset(tap_dance_state_t *state, void *user_data) {
     td_macback_state = TD_NONE;
 }
 
+// Window management tap dances (translated from ZMK)
+// Each dance: 1-tap = move window, 2-tap = resize/third, 3-tap = alternate size
+// Keycodes: 1=tap1, 2=tap2, 3=tap3
+typedef struct {
+    uint16_t tap1;
+    uint16_t tap2;
+    uint16_t tap3;
+} winmgmt_td_t;
+
+// Indexed 0–8, matching the user_data values in tap_dance_actions[]
+static const winmgmt_td_t winmgmt_keys[] = {
+    { LCTL(LALT(LGUI(KC_PGUP))), LSFT(LCTL(LALT(LGUI(KC_BSLS)))),       LSFT(LCTL(LALT(LGUI(KC_7)))) }, // 0 TD_LEFTTOP
+    { LCTL(LALT(KC_UP)),         LSFT(LCTL(LALT(LGUI(KC_UP)))),        LSFT(LCTL(LALT(LGUI(KC_8)))) }, // 1 TD_TOPTOP
+    { LCTL(LALT(LGUI(KC_HOME))), LSFT(LCTL(LALT(LGUI(KC_GRV)))),         LSFT(LCTL(LALT(LGUI(KC_9)))) }, // 2 TD_RIGHTTOP
+    { LCTL(LALT(KC_LEFT)),       LSFT(LCTL(LALT(LGUI(LSFT(KC_LBRC))))), LSFT(LCTL(LALT(LGUI(KC_1)))) }, // 3 TD_LEFTLEFT
+    { LCTL(LALT(KC_ENT)),        LSFT(LCTL(LALT(LGUI(LSFT(KC_QUOT))))),    LSFT(LCTL(LALT(LGUI(KC_5)))) }, // 4 TD_CENTERCENTER
+    { LCTL(LALT(KC_RGHT)),       LSFT(LCTL(LALT(LGUI(LSFT(KC_RBRC))))), LSFT(LCTL(LALT(LGUI(KC_3)))) }, // 5 TD_RIGHTRIGHT
+    { LCTL(LALT(LGUI(KC_PGDN))), LSFT(LCTL(LALT(LGUI(LSFT(KC_LEFT))))), LSFT(LCTL(LALT(LGUI(KC_4)))) }, // 6 TD_LEFTBOT
+    { LCTL(LALT(KC_DOWN)),       LSFT(LCTL(LALT(LGUI(KC_DOWN)))),        LSFT(LCTL(LALT(LGUI(KC_2)))) }, // 7 TD_BOTBOT
+    { LCTL(LALT(LGUI(KC_END))),  LSFT(LCTL(LALT(LGUI(LSFT(KC_RIGHT))))),  LSFT(LCTL(LALT(LGUI(KC_6)))) }, // 8 TD_RIGHTBOT
+};
+
+void winmgmt_finished(tap_dance_state_t *state, void *user_data) {
+    uint8_t idx = (uint8_t)(uintptr_t)user_data;
+    const winmgmt_td_t *k = &winmgmt_keys[idx];
+    if (state->count == 1)      { tap_code16(k->tap1); }
+    else if (state->count == 2) { tap_code16(k->tap2); }
+    else                        { tap_code16(k->tap3); }
+}
+
+void winmgmt_reset(tap_dance_state_t *state, void *user_data) {}
+
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_MACBACK_LSFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, macback_lsft_finished, macback_lsft_reset),
+    [TD_MACBACK_LSFT]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, macback_lsft_finished, macback_lsft_reset),
+    [TD_LEFTTOP]        = { .fn = {NULL, winmgmt_finished, winmgmt_reset, NULL}, .user_data = (void *)0 },
+    [TD_TOPTOP]         = { .fn = {NULL, winmgmt_finished, winmgmt_reset, NULL}, .user_data = (void *)1 },
+    [TD_RIGHTTOP]       = { .fn = {NULL, winmgmt_finished, winmgmt_reset, NULL}, .user_data = (void *)2 },
+    [TD_LEFTLEFT]       = { .fn = {NULL, winmgmt_finished, winmgmt_reset, NULL}, .user_data = (void *)3 },
+    [TD_CENTERCENTER]   = { .fn = {NULL, winmgmt_finished, winmgmt_reset, NULL}, .user_data = (void *)4 },
+    [TD_RIGHTRIGHT]     = { .fn = {NULL, winmgmt_finished, winmgmt_reset, NULL}, .user_data = (void *)5 },
+    [TD_LEFTBOT]        = { .fn = {NULL, winmgmt_finished, winmgmt_reset, NULL}, .user_data = (void *)6 },
+    [TD_BOTBOT]         = { .fn = {NULL, winmgmt_finished, winmgmt_reset, NULL}, .user_data = (void *)7 },
+    [TD_RIGHTBOT]       = { .fn = {NULL, winmgmt_finished, winmgmt_reset, NULL}, .user_data = (void *)8 },
 };
