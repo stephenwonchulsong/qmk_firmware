@@ -117,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = LAYOUT_ffkb(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-     KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_F17,
+     KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   DF(_COLEMNK),
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+-------|
      QK_GESC,   LCTL_T(KC_A), LALT_T(KC_S), LT(_MOUSE, KC_D), LT(_EXTRA, KC_F),    LGUI_T(KC_G), KC_H,   KC_J,    KC_K,     KC_L,  KC_SCLN, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -130,13 +130,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_COLEMNK] = LAYOUT_ffkb(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
- KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,                         KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN,   DF(_QWERTY),
+ _______,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,                         KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN,   DF(_QWERTY),
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,   KC_N,    KC_R,    KC_S,    LT(_MOUSE, KC_T), LT(_EXTRA, KC_D),                         KC_H,   KC_A,    KC_E,     KC_I,  KC_O, KC_ENT,
+      _______,   LCTL_T(KC_A),    LALT_T(KC_R),    LT(_MOUSE, KC_S),    LT(_MOUSE, KC_T), LT(_EXTRA, KC_D),  KC_H,   KC_N,    KC_E,     KC_I,  KC_O, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______,   LSFT_T(KC_Z), LCTL_T(KC_X), LALT_T(KC_C), KC_V, LGUI_T(KC_B), RGUI_T(KC_K), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  RSFT_T(KC_SLSH), SHIFTL,
+     _______,   _______, _______, _______, _______, _______, RGUI_T(KC_K), KC_M, LALT_T(KC_COMM),  LCTL_T(KC_DOT),  RSFT_T(KC_SLSH), SHIFTL,
   ////|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                KC_F12, LOWERBSPC,  LCMD_T(KC_ENT), KC_BTN1,  KC_BTN2, KC_SPC, LT(_RAISE, KC_TAB),  KC_F18
+                                    KC_F12, LOWERBSPC,  LCMD_T(KC_ENT), KC_BTN1,  KC_BTN2, LSFT_T(KC_SPC), LT(_RAISE, KC_TAB),  KC_F18
+
                      //`|--------+--------+--------+--------|'`|--------+--------+--------+--------|'
 ),
 
@@ -494,6 +495,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LOWERBSPC:
+            return 175;
+        default:
+            return 0;
+    }
+}
+
 
 //   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
 //      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
@@ -511,7 +521,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
      case RAISECAPS:
      case RAISESPC:
      case LOWERDEL:
-     case LOWERBSPC:
+    //  case LOWERBSPC:
      case ESCXTRA:
      case SFTSLSH:
      case LT(_SHIFT, KC_SLSH):
